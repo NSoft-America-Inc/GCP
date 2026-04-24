@@ -4,8 +4,9 @@
 
 ## 📈 여정 요약 (Summary)
 - **목표**: Google Partner 등급 달성
-- **진행률**: 0% (0/11 Steps Completed)
-- **현재 단계**: Step 1.1 (MCC 생성)
+- **진행률**: 9% (1/11 Steps Completed)
+- **현재 단계**: Step 1.2 (프로그램 등록)
+- **관리자 계정(MCC)**: `466-235-9797` (NSoft America, Inc.)
 
 ---
 
@@ -14,8 +15,8 @@
 ### Phase 1: 기초 인프라 및 프로그램 등록 (Foundation)
 | Step | Task | Status | Issue | Document |
 | :--- | :--- | :--- | :--- | :--- |
-| **1.1** | **Google Ads 관리자 계정(MCC) 생성** | 🏃 Doing | #1 | [Guide](tasks/task-01-mcc-setup.md) |
-| **1.2** | Google Partners 프로그램 공식 등록 | 📅 Todo | - | - |
+| **1.1** | **Google Ads 관리자 계정(MCC) 생성** | ✅ Done | #1 | [Guide](tasks/task-01-mcc-setup.md) |
+| **1.2** | **Google Partners 프로그램 공식 등록** | 🏃 Doing | #2 | [Guide](tasks/task-02-program-registration.md) |
 | **1.3** | 회사 프로필 및 도메인 인증 | 📅 Todo | - | - |
 
 ### Phase 2: 팀 연동 및 전문성 확보 (Certification)
