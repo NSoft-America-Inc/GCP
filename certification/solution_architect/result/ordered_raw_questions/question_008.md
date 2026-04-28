@@ -1,0 +1,30 @@
+## Exam Professional Cloud Architect topic 1 question 8 discussion
+
+Actual exam question from
+
+Google's
+Professional Cloud Architect
+
+Question #: 8
+Topic #: 1
+
+[All Professional Cloud Architect Questions]
+
+Your company wants to track whether someone is present in a meeting room reserved for a scheduled meeting. There are 1000 meeting rooms across 5 offices on 3 continents. Each room is equipped with a motion sensor that reports its status every second. The data from the motion detector includes only a sensor ID and several different discrete items of information. Analysts will use this data, together with information about account owners and office locations.Which database type should you use? 
+Suggested Answer: B 🗳️ 
+
+A. Flat file
+
+B. NoSQL
+
+C. Relational
+
+D. Blobstore
+
+**Answer: B**
+
+**Timestamp: Oct. 24, 2019, 1:39 p.m.**
+
+[View on ExamTopics](https://www.examtopics.com/discussions/google/view/7126-exam-professional-cloud-architect-topic-1-question-8/)
+
+----------------------------------------

@@ -1,61 +1,122 @@
-# 🚀 Google Partners Journey: From Zero to Partner
+# 🚀 Google Cloud Partner Network: From Zero to Partner
 
-벤자민님, NSoft America의 Google Partner 등급 획득을 위한 여정을 시작합니다. 이 문서는 우리가 'Google Partner'라는 공식적인 신뢰를 얻기까지의 모든 과정과 기술적 성취를 기록하는 살아있는 지도(Living Document)가 될 것입니다.
+> **목표**: NSoft America의 Google Cloud Partner Network 등록 및 Select 등급 달성
+> *Last Updated: 2026-04-27*
+
+---
 
 ## 📊 현재 상태 대시보드 (Current Status Dashboard)
+
 | 항목 | 상태 | 세부 내용 |
 | :--- | :--- | :--- |
-| **현재 등급** | ⚪ **N/A** | 프로그램 미등록 상태 |
-| **관리자 계정(MCC)** | ❌ **Missing** | 생성 필요 |
-| **Performance** | ➖ **0%** | 최적화 점수 데이터 없음 |
-| **Spend (90d)** | ➖ **$0** | 광고 지출 데이터 없음 |
-| **Certification** | ➖ **0%** | 인증 보유 인원 확인 필요 |
+| **현재 등급** | ⚪ **미등록** | 파트너 포털 등록 필요 |
+| **파트너 포털 계정** | ❌ **Missing** | partners.cloud.google.com 등록 필요 |
+| **GCP 기술 인증** | ❌ **0명** | Professional 인증 보유자 없음 |
+| **고객 배포 실적** | ⏳ **진행중** | 용산 북미법인 MES 프로젝트 (구축 예정) |
+| **GCP 소비 연동** | ❌ **미설정** | 파트너 빌링 계정 구성 필요 |
 
 ---
 
-## 🛠 3대 핵심 요건 체크리스트 (Key Requirements)
+## ⚠️ 기존 계획 수정 사항
 
-### 1. 실적 (Performance)
-Google Ads 캠페인을 얼마나 효과적으로 운영하고 있는지를 나타냅니다.
-- [ ] **최적화 점수 유지**: 관리자 계정에 연결된 계정들의 최적화 점수(Optimization Score)를 **70% 이상**으로 유지.
-- [ ] **전략적 권장사항 적용**: 구글이 제안하는 권장사항(Recommendations)을 비즈니스 목표에 맞게 수용 또는 거부하여 관리 역량 입증.
+기존 문서는 **Google Ads Partner** 기준으로 작성되어 있었습니다. NSoft America의 사업 방향(GCP 인프라 구축·운영)에는 **Google Cloud Partner Network**가 적합합니다.
 
-### 2. 지출 (Spend)
-관리 규모를 나타내며, 대행사로서의 활동성을 증명합니다.
-- [ ] **최근 90일 지출액**: 관리 중인 모든 계정에서 최근 90일간 합산 지출액 **$10,000 (USD)** 이상 달성.
+| 항목 | 기존 (Google Ads) | 변경 (Google Cloud) |
+| :--- | :--- | :--- |
+| **포털** | ads.google.com (MCC) | partners.cloud.google.com |
+| **인증** | Google Ads 인증 (Skillshop) | GCP Professional 자격증 |
+| **실적 기준** | 광고 최적화 점수 70%+ | 고객 GCP 배포 실적 |
+| **지출 기준** | 광고비 $10,000/90일 | GCP 소비 실적 (소비량 기준) |
+| **등급 체계** | Partner / Premier | Member → Select → Premier → Diamond |
 
-### 3. 인증 (Certification)
-팀의 전문 지식 수준을 증명합니다.
-- [ ] **전략가 인증 보유**: Google Ads 계정 전략가(Strategist) 중 **50% 이상**이 Google Ads 인증 획득.
-- [ ] **필수 인증 영역**: 검색(Search), 디스플레이(Display), 동영상(Video), 쇼핑(Shopping), 앱(App) 중 비즈니스에 핵심적인 영역 우선 획득.
+> 기존에 생성된 MCC 계정(`466-235-9797`)은 Google Ads용으로, Cloud Partner Network와 별개입니다.
 
 ---
 
-## 🎯 마일스톤 및 로드맵 (Milestones & Roadmap)
+## 🏗 Google Cloud Partner Network 등급 체계
 
-### Phase 1: 기초 인프라 및 프로그램 등록 (현재 단계)
-- [ ] **[Milestone 1] Google Ads 관리자 계정(MCC) 생성**
-- [ ] Google Partners 프로그램 공식 등록 및 회사 프로필 설정
-- [ ] Google Ads 고객 센터와의 통신 채널 확보
-
-### Phase 2: 멤버(Member) 등급 진입
-- [ ] 팀원 초대 및 Skillshop 계정 연동
-- [ ] 첫 번째 Google Ads 인증자 배출
-- [ ] 클라이언트 계정 MCC 연결 및 데이터 수집 시작
-
-### Phase 3: 파트너(Partner) 등급 획득
-- [ ] 실적 요건(70%+) 상시 모니터링 체계 구축
-- [ ] 지출 요건($10,000+) 달성을 위한 광고주 관리 확장
-- [ ] 파트너 배지(Partner Badge) 획득 및 마케팅 활용
+| 등급 | 주요 요건 | NSoft 목표 |
+| :--- | :--- | :--- |
+| **Member** | 포털 등록만으로 진입 | ✅ 1단계 목표 |
+| **Select** | GCP 인증 + 고객 실적 + 소비 기준 충족 | 🎯 중기 목표 |
+| **Premier** | Select 요건 + 추가 Specialization + 높은 소비 실적 | 장기 목표 |
+| **Diamond** | 최고 등급, 대형 파트너 대상 | - |
 
 ---
 
-## 💡 벤자민을 위한 다음 단계 제안 (Next Steps)
+## 🛠 3대 핵심 요건
 
-여정의 첫 단추를 꿰기 위해 제가 제안하는 다음 액션 아이템은 다음과 같습니다:
+### 1. 기술 인증 (Certifications)
+팀의 GCP 기술 역량을 공식적으로 증명합니다.
 
-1.  **Google Ads 관리자 계정(MCC) 생성**: 회사 법인 계정 또는 전용 관리 계정을 사용하여 MCC를 생성해야 합니다.
-2.  **프로그램 등록**: MCC 생성 직후, 'Google Partners' 메뉴를 통해 파트너 프로그램 가입을 완료해야 합니다.
-3.  **인증 현황 파악**: 현재 팀 내에 Google Ads 인증을 보유하고 있거나 준비 중인 인원 리스트를 정리해주시면, 인증 요건 달성을 위한 스케줄을 짜드리겠습니다.
+| 인증 | 수준 | 우선순위 | 대상 |
+| :--- | :--- | :--- | :--- |
+| **Professional Cloud Architect** | Professional | ⭐ 최우선 | 아키텍트 |
+| **Associate Cloud Engineer** | Associate | ⭐ 우선 | 엔지니어 |
+| **Professional Cloud DevOps Engineer** | Professional | 보통 | DevOps |
+| **Professional Cloud Security Engineer** | Professional | 보통 | 보안 담당 |
 
-준비가 되셨다면, **관리자 계정으로 사용할 이메일 주소**를 알려주시거나 직접 생성 후 알려주세요. 그다음 단계인 프로그램 등록 과정을 가이드해 드리겠습니다.
+> Select 등급: 최소 1명 이상 Professional 인증 필요
+
+### 2. 고객 배포 실적 (Customer Success)
+실제 GCP 기반 프로젝트 납품 이력을 파트너 포털에 등록합니다.
+
+- [ ] **용산 북미법인 MES 프로젝트** → 완료 후 Customer Success Story 등록
+- [ ] 고객 레퍼런스 (Customer Reference Letter) 확보
+- [ ] Google 파트너 포털에 프로젝트 사례 공식 제출
+
+### 3. GCP 소비 실적 (Cloud Consumption)
+파트너 계정을 통해 고객의 GCP 사용량이 집계되어야 합니다.
+
+- [ ] 파트너 빌링 모델 결정 (Reseller 또는 Referral)
+- [ ] 고객 GCP 프로젝트와 파트너 계정 연동 설정
+- [ ] 월간 GCP 소비 실적 누적 관리
+
+---
+
+## 🎯 마일스톤 로드맵
+
+### Phase 1: 파트너 포털 등록 (현재 단계)
+- [ ] partners.cloud.google.com 파트너 포털 계정 생성
+- [ ] 회사 프로필 등록 (NSoft America Inc.)
+- [ ] 파트너 유형 선택 → **Services Partner** (구축·운영 전문)
+- [ ] Member 등급 진입 확인
+
+### Phase 2: 기술 역량 공식화
+- [ ] Cloud Skills Boost 팀 학습 계획 수립
+- [ ] Professional Cloud Architect 시험 준비 및 취득
+- [ ] Associate Cloud Engineer 취득 (실무 엔지니어)
+- [ ] 인증 취득 후 파트너 포털에 팀원 연동
+
+### Phase 3: 실적 연동 → Select 진입
+- [ ] 용산 MES 프로젝트 완료 → 고객 성공 사례 등록
+- [ ] 파트너 빌링 계정으로 GCP 소비 집계 시작
+- [ ] Select 등급 요건 충족 여부 확인 및 신청
+
+### Phase 4: 전문화 → Premier 목표
+- [ ] Specialization 취득 (Infrastructure 또는 Data Management)
+- [ ] 추가 고객 사례 2건 이상 등록
+- [ ] Premier 등급 요건 검토 및 신청
+
+---
+
+## 💡 NSoft 보유 자산 → 파트너 요건 연계
+
+| NSoft 보유 자산 | 파트너 요건 연계 |
+| :--- | :--- |
+| 용산 북미법인 MES 구축 프로젝트 | → Customer Success Story 1건 |
+| GCP 인프라 설계·운영 역량 | → Professional Cloud Architect 인증으로 공식화 |
+| us-east1 기반 아키텍처 경험 | → Services Partner 트랙 적합 |
+| Staging-to-Production 배포 경험 | → DevOps Engineer 인증 연계 가능 |
+
+---
+
+## 🔗 핵심 링크
+
+| 용도 | URL |
+| :--- | :--- |
+| 파트너 포털 등록 | https://partners.cloud.google.com/enrollment/enter-email |
+| 파트너 포털 로그인 | https://partners.cloud.google.com/u/0/home |
+| GCP 인증 안내 | https://cloud.google.com/certification |
+| Cloud Skills Boost (학습 플랫폼) | https://cloudskillsboost.google |
+| GCP 인증 시험 등록 | https://www.webassessor.com/googlecloud |

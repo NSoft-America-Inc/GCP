@@ -1,0 +1,30 @@
+## Exam Professional Cloud Architect topic 8 question 5 discussion
+
+Actual exam question from
+
+Google's
+Professional Cloud Architect
+
+Question #: 5
+Topic #: 8
+
+[All Professional Cloud Architect Questions]
+
+You analyzed TerramEarth's business requirement to reduce downtime, and found that they can achieve a majority of time saving by reducing customer's wait time for parts. You decided to focus on reduction of the 3 weeks aggregate reporting time.Which modifications to the company's processes should you recommend? 
+Suggested Answer: C 🗳️ 
+
+A. Migrate from CSV to binary format, migrate from FTP to SFTP transport, and develop machine learning analysis of metrics
+
+B. Migrate from FTP to streaming transport, migrate from CSV to binary format, and develop machine learning analysis of metrics
+
+C. Increase fleet cellular connectivity to 80%, migrate from FTP to streaming transport, and develop machine learning analysis of metrics
+
+D. Migrate from FTP to SFTP transport, develop machine learning analysis of metrics, and increase dealer local inventory by a fixed factor
+
+**Answer: C**
+
+**Timestamp: Nov. 20, 2019, 1:43 p.m.**
+
+[View on ExamTopics](https://www.examtopics.com/discussions/google/view/8687-exam-professional-cloud-architect-topic-8-question-5/)
+
+----------------------------------------

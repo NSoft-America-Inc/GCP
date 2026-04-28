@@ -1,0 +1,30 @@
+## Exam Professional Cloud Architect topic 1 question 69 discussion
+
+Actual exam question from
+
+Google's
+Professional Cloud Architect
+
+Question #: 69
+Topic #: 1
+
+[All Professional Cloud Architect Questions]
+
+You are running a cluster on Kubernetes Engine (GKE) to serve a web application. Users are reporting that a specific part of the application is not responding anymore. You notice that all pods of your deployment keep restarting after 2 seconds. The application writes logs to standard output. You want to inspect the logs to find the cause of the issue. Which approach can you take? 
+Suggested Answer: B 🗳️ 
+
+A. Review the Stackdriver logs for each Compute Engine instance that is serving as a node in the cluster.
+
+B. Review the Stackdriver logs for the specific GKE container that is serving the unresponsive part of the application.
+
+C. Connect to the cluster using gcloud credentials and connect to a container in one of the pods to read the logs.
+
+D. Review the Serial Port logs for each Compute Engine instance that is serving as a node in the cluster.
+
+**Answer: B**
+
+**Timestamp: Oct. 21, 2019, 4:05 p.m.**
+
+[View on ExamTopics](https://www.examtopics.com/discussions/google/view/6892-exam-professional-cloud-architect-topic-1-question-69/)
+
+----------------------------------------
