@@ -1,521 +1,606 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCP Professional Cloud Architect - Premium Cheat Sheet</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Marked.js -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Mermaid.js -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #111827 100%);
-            --card-bg: rgba(31, 41, 55, 0.4);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --accent-blue: #60a5fa;
-            --accent-green: #34d399;
-            --accent-purple: #a78bfa;
-            --accent-coral: #fb7185;
-            --sidebar-width: 340px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCP Professional Cloud Architect – Cheat Sheet</title>
+<meta name="description" content="Google Cloud Professional Cloud Architect Master Cheat Sheet. Covers infrastructure, IAM, compute, storage, networking, big data, and operations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0f1a;
+  --sidebar-bg: #0f1525;
+  --card-bg: #131929;
+  --border: rgba(255,255,255,0.07);
+  --accent: #4f8ef7;
+  --accent2: #38bdf8;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --heading: #f8fafc;
+  --tag-bg: rgba(79,142,247,0.12);
+  --sidebar-width: 240px;
+  --section-line: rgba(79,142,247,0.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh;line-height:1.6}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Pretendard', sans-serif;
-        }
+/* SIDEBAR */
+#sidebar{
+  width:var(--sidebar-width);
+  min-height:100vh;
+  background:var(--sidebar-bg);
+  border-right:1px solid var(--border);
+  position:fixed;
+  top:0;left:0;
+  display:flex;
+  flex-direction:column;
+  overflow-y:auto;
+  z-index:100;
+}
+.sidebar-logo{
+  padding:20px 18px 12px;
+  font-size:0.85rem;
+  font-weight:700;
+  color:var(--accent);
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.sidebar-logo span{font-size:1.1rem}
+.sidebar-search{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-search input{
+  width:100%;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:7px 10px;
+  font-size:0.78rem;
+  color:var(--text);
+  font-family:inherit;
+  outline:none;
+}
+.sidebar-search input::placeholder{color:var(--text-dim)}
+.sidebar-search input:focus{border-color:var(--accent)}
+.nav-section-label{
+  font-size:0.65rem;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  padding:14px 18px 6px;
+}
+.nav-link{
+  display:block;
+  padding:9px 18px;
+  font-size:0.82rem;
+  color:var(--text-dim);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:all 0.2s;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.nav-link:hover{color:var(--text);background:rgba(255,255,255,0.04);border-left-color:var(--accent)}
+.nav-link.active{color:var(--accent);background:rgba(79,142,247,0.08);border-left-color:var(--accent);font-weight:600}
 
-        body {
-            background: var(--bg-gradient);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            overflow: hidden;
-        }
+/* MAIN */
+#main{
+  margin-left:var(--sidebar-width);
+  flex:1;
+  max-width:960px;
+  padding:40px 36px;
+}
+.page-header{
+  margin-bottom:40px;
+  padding-bottom:28px;
+  border-bottom:1px solid var(--border);
+}
+.page-header h1{
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--heading);
+  margin-bottom:6px;
+}
+.page-header p{
+  font-size:0.88rem;
+  color:var(--text-dim);
+}
 
-        /* Sidebar */
-        #sidebar {
-            width: var(--sidebar-width);
-            height: 100vh;
-            background: rgba(17, 24, 39, 0.95);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-        }
+/* SECTIONS */
+.topic-section{
+  margin-bottom:52px;
+  scroll-margin-top:24px;
+}
+.section-heading{
+  font-size:1.15rem;
+  font-weight:700;
+  color:var(--heading);
+  padding:14px 18px;
+  background:linear-gradient(90deg, rgba(79,142,247,0.12), transparent);
+  border-left:4px solid var(--accent);
+  border-radius:0 8px 8px 0;
+  margin-bottom:16px;
+  letter-spacing:0.01em;
+}
 
-        .sidebar-header {
-            padding: 24px;
-            border-bottom: 1px solid var(--border-color);
-        }
+/* CARDS */
+.topic-card{
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px 20px;
+  margin-bottom:10px;
+  display:grid;
+  grid-template-columns:200px 1fr;
+  gap:12px 20px;
+  align-items:baseline;
+  transition:border-color 0.2s;
+}
+.topic-card:hover{border-color:rgba(79,142,247,0.35)}
+.topic-term{
+  font-size:0.85rem;
+  font-weight:600;
+  color:var(--accent2);
+  font-family:'JetBrains Mono',monospace;
+}
+.topic-desc{
+  font-size:0.84rem;
+  color:var(--text);
+  line-height:1.65;
+}
 
-        .sidebar-header h1 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+/* TABLE */
+.table-wrap{overflow-x:auto;margin-bottom:10px}
+.resource-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.83rem;
+  background:var(--card-bg);
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.resource-table th{
+  background:rgba(79,142,247,0.15);
+  color:var(--accent);
+  font-weight:600;
+  padding:10px 16px;
+  text-align:left;
+  letter-spacing:0.04em;
+  font-size:0.78rem;
+  text-transform:uppercase;
+}
+.resource-table td{
+  padding:9px 16px;
+  border-top:1px solid var(--border);
+  color:var(--text);
+}
+.resource-table tr:hover td{background:rgba(255,255,255,0.02)}
 
-        .search-container {
-            margin-top: 16px;
-            position: relative;
-        }
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:10px}
 
-        .search-container i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 14px 12px 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
-        }
-
-        #toc {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px;
-        }
-
-        #toc::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        #toc::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        .toc-item {
-            margin-bottom: 8px;
-        }
-
-        .toc-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            display: block;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .toc-link:hover {
-            color: var(--accent-blue);
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .toc-link.active {
-            color: var(--text-primary);
-            background: rgba(96, 165, 250, 0.15);
-            font-weight: 600;
-        }
-
-        /* Main Content */
-        #main-content {
-            flex: 1;
-            height: 100vh;
-            overflow-y: auto;
-            padding: 40px;
-            background: rgba(0,0,0,0.2);
-        }
-
-        #main-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        #main-content::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 32px;
-            background: rgba(17, 24, 39, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 6px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            width: fit-content;
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .tab-btn:hover {
-            color: var(--text-primary);
-        }
-
-        .tab-btn.active {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--accent-blue);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Content Card */
-        .content-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 48px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-
-        /* Markdown Sections styling */
-        .markdown-body h1 {
-            font-size: 2.25rem;
-            font-weight: 800;
-            margin-bottom: 32px;
-            letter-spacing: -0.025em;
-            color: var(--text-primary);
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-        }
-
-        .markdown-body h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-top: 56px;
-            margin-bottom: 24px;
-            color: var(--accent-blue);
-            letter-spacing: -0.025em;
-        }
-
-        .markdown-body h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 24px;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.9;
-        }
-
-        .markdown-body p, .markdown-body ul {
-            line-height: 1.75;
-            margin-bottom: 20px;
-            color: var(--text-secondary);
-        }
-
-        .markdown-body li {
-            margin-bottom: 12px;
-        }
-
-        .markdown-body li strong {
-            color: var(--text-primary);
-        }
-
-        /* Custom Containers for visual separation */
-        .section-block {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .lang-en-block {
-            border-left: 4px solid var(--accent-blue);
-        }
-
-        .lang-ko-block {
-            border-left: 4px solid var(--accent-green);
-            background: rgba(52, 211, 153, 0.02);
-        }
-
-        .qa-block {
-            background: rgba(167, 139, 250, 0.05);
-            border: 1px solid rgba(167, 139, 250, 0.15);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 32px;
-        }
-
-        .qa-block strong {
-            color: var(--accent-purple);
-        }
-
-        /* Mermaid */
-        .mermaid {
-            background: rgba(15, 23, 42, 0.5);
-            padding: 24px;
-            border-radius: 16px;
-            margin: 32px 0;
-            border: 1px solid var(--border-color);
-            display: flex;
-            justify-content: center;
-        }
-
-        /* FAB */
-        .fab {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            background: var(--accent-blue);
-            color: #0b0f19;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.4);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-        }
-
-        .fab:hover {
-            transform: scale(1.1) rotate(90deg);
-            background: var(--accent-purple);
-            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.4);
-        }
-
-        @media (max-width: 1024px) {
-            #sidebar { position: absolute; transform: translateX(-100%); }
-            #sidebar.open { transform: translateX(0); }
-        }
-    </style>
+@media(max-width:768px){
+  :root{--sidebar-width:0px}
+  #sidebar{display:none}
+  #main{margin-left:0;padding:20px}
+  .topic-card{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside id="sidebar">
-        <div class="sidebar-header">
-            <h1><i class="fa-solid fa-bolt"></i> GCP PCA Master</h1>
-            <div class="search-container">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="search-input" placeholder="빠른 검색..." oninput="handleSearch(this.value)">
-            </div>
-        </div>
-        <div id="toc"></div>
-    </aside>
+<nav id="sidebar">
+  <div class="sidebar-logo"><span>☁️</span> GCP PCA</div>
+  <div class="sidebar-search"><input type="text" id="search-input" placeholder="Quick search..." autocomplete="off"></div>
+  <div class="nav-section-label">Topics</div>
+  <a href="#infrastructure" class="nav-link" data-target="infrastructure">Google's Infrastructure</a>
+<a href="#networking" class="nav-link" data-target="networking">Networking Fundamentals</a>
+<a href="#iam" class="nav-link" data-target="iam">Cloud IAM</a>
+<a href="#resource-mgmt" class="nav-link" data-target="resource-mgmt">Resource Management</a>
+<a href="#resources-table" class="nav-link" data-target="resources-table">Global/Regional/Zonal</a>
+<a href="#compute" class="nav-link" data-target="compute">Compute Options</a>
+<a href="#storage" class="nav-link" data-target="storage">Storage & Databases</a>
+<a href="#networking2" class="nav-link" data-target="networking2">Networking Services</a>
+<a href="#bigdata" class="nav-link" data-target="bigdata">Big Data & IoT</a>
+<a href="#operations" class="nav-link" data-target="operations">Operations & Management</a>
+<a href="#development" class="nav-link" data-target="development">Development & APIs</a>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab(1)">Part 1: 핵심 인프라</button>
-            <button class="tab-btn" onclick="switchTab(2)">Part 2: 서비스 설계</button>
-            <button class="tab-btn" onclick="switchTab(3)">Part 3: 운영 및 마이그레이션</button>
-        </div>
+</nav>
+<main id="main">
+  <div class="page-header">
+    <h1>GCP Professional Cloud Architect</h1>
+    <p>Master Cheat Sheet — Source: SkillCertPro</p>
+  </div>
+  <section class="topic-section" id="infrastructure">
+<h2 class="section-heading">Google's Infrastructure</h2>
+<div class="topic-card">
+<div class="topic-term">Backbone</div>
+<div class="topic-desc">Global, meshed backbone network to interconnect data centers and deliver traffic to their Edge Points of Presence (POPs).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">PoPs</div>
+<div class="topic-desc">70+ edge PoPs in 33 countries interconnected via the Backbone network.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Edge Caching</div>
+<div class="topic-desc">A caching platform that sits on top of the infrastructure network. Edge locations can be found in virtually every country.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Regions</div>
+<div class="topic-desc">Specific geographical locations where you can run your resources. Collection of zones. Regional resources are available to resources in any zone in the region. Example: us-central1</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Multi-Regions</div>
+<div class="topic-desc">A multi-regional location is a general geographical area (e.g. United States). Multi-region locations contain multiple regional locations, each separated by at least 100 miles.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Zones</div>
+<div class="topic-desc">Isolated locations within a region. Zonal resources are only available in that zone. Example: us-central1-a</div>
+</div>
+</section>
+<section class="topic-section" id="networking">
+<h2 class="section-heading">GCP Networking Fundamentals</h2>
+<div class="topic-card">
+<div class="topic-term">VPC Networks – Pricing</div>
+<div class="topic-desc">Sub-hour billing (billed in minutes). Ingress is free; Egress is charged. Egress to some GCP services is sometimes free.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Sustained-Use Discounts</div>
+<div class="topic-desc">Applied automatically — no action required. You can get up to 30% net discount for instances that run the entire month. No upfront costs and not tied to machine type.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Committed-Use Discounts</div>
+<div class="topic-desc">Similar to AWS Reserved Instances.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Security</div>
+<div class="topic-desc">All data is encrypted at rest. All WAN traffic is encrypted automatically. Google's BeyondCorp model shifts access controls from the network perimeter to individual devices and users — allowing employees to work securely from any location without a VPN.</div>
+</div>
+</section>
+<section class="topic-section" id="iam">
+<h2 class="section-heading">Cloud IAM</h2>
+<div class="topic-card">
+<div class="topic-term">Overview</div>
+<div class="topic-desc">Provides granular access to resources and enforces the principle of least privilege.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Members (Who)</div>
+<div class="topic-desc">Person (Google Account), Google Group, Service Account — identified by <project_number/id>@developer.gserviceaccount.com</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Permissions & Roles (What)</div>
+<div class="topic-desc">Role: Collection of permissions to use/manage GCP resources, assigned to users. Permissions: Give access to a given resource, identified by <service>.<resource>.<verb> (e.g. pubsub.subscriptions.consume).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Policies</div>
+<div class="topic-desc">Bind Members to Roles at a hierarchy level (Organisation, Folder, Project, or Resource). Hierarchically defined — parent overrules child policy.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Service Accounts</div>
+<div class="topic-desc">Global. Similar to AWS Role. Special type of Google account representing an application, not an end user. Can be assumed by applications or individual users when authorised.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">GCP-Managed Keys</div>
+<div class="topic-desc">Used by GCP services such as App Engine and Compute Engine. Keys cannot be downloaded. Rotated automatically on a weekly basis.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">User-Managed Keys</div>
+<div class="topic-desc">Created, downloadable, and managed by users. Expire 10 years from creation.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Primitive Roles</div>
+<div class="topic-desc">Historical roles before Cloud IAM. Applied at the Project level (broad scope). Types: Viewer (Read only), Editor (Read + Write), Owner (Read + Write + manage access + billing).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Predefined Roles</div>
+<div class="topic-desc">Much more granular access, applied at the Resource level.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Identity</div>
+<div class="topic-desc">Identity as a Service (IDaaS). Supports MFA, SSO via OIDC/SAML/OAuth2. Can sync from AD and LDAP via Google Cloud Directory Sync.</div>
+</div>
+</section>
+<section class="topic-section" id="resource-mgmt">
+<h2 class="section-heading">Resource Management</h2>
+<div class="topic-card">
+<div class="topic-term">Cloud Resource Manager</div>
+<div class="topic-desc">Hierarchically manage resources by project, folder, and organisation. Organisation is the root node. Provides a Recycle Bin to undelete projects. Custom IAM roles can be defined at the organisation level.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Audit Logging</div>
+<div class="topic-desc">Global. Who did what, where, and when? Two audit logs per project/organisation: Admin Activity (400-day free retention), Data Access (7-day free; 30-day paid).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud KMS</div>
+<div class="topic-desc">Regional and Global. Low-latency service to manage AES256 encryption keys. Rotate keys automatically or on demand. Key deletion has 24-hour delay. Pay for active key versions stored and key use operations.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud IAP</div>
+<div class="topic-desc">Guards apps running on GCP through identity verification instead of VPN access. Based on CLB and IAM — only passes authorised requests.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Security Scanner</div>
+<div class="topic-desc">Global. Free (limited) GAE vulnerability scanner with very low false positive rates. Crawler-based. Detects: XSS, Flash injection, Mixed content, Outdated/insecure libraries.</div>
+</div>
+</section>
+<section class="topic-section" id="resources-table">
+<h2 class="section-heading">Global / Regional / Zonal Resources</h2>
+<div class="table-wrap"><table class="resource-table">
+<thead><tr><th>Resource</th><th>Global</th><th>Regional</th><th>Zonal</th></tr></thead>
+<tbody>
+<tr><td>Images</td><td>✓</td><td></td><td></td></tr>
+<tr><td>Snapshots</td><td>✓</td><td></td><td></td></tr>
+<tr><td>Instance Templates</td><td>✓</td><td></td><td></td></tr>
+<tr><td>VPC Network</td><td>✓</td><td></td><td></td></tr>
+<tr><td>Firewalls</td><td>✓</td><td></td><td></td></tr>
+<tr><td>Routes</td><td>✓</td><td></td><td></td></tr>
+<tr><td>Addresses</td><td>✓/✓</td><td>✓</td><td></td></tr>
+<tr><td>Subnets</td><td></td><td>✓</td><td></td></tr>
+<tr><td>Regional Managed Instance Groups</td><td></td><td>✓</td><td></td></tr>
+<tr><td>Instances</td><td></td><td></td><td>✓</td></tr>
+<tr><td>Disks</td><td></td><td></td><td>✓</td></tr>
+<tr><td>Machine Types</td><td></td><td></td><td>✓</td></tr>
+<tr><td>Zonal Managed Instance Groups</td><td></td><td></td><td>✓</td></tr>
+</tbody></table></div>
+</section>
+<section class="topic-section" id="compute">
+<h2 class="section-heading">Compute Options</h2>
+<div class="topic-card">
+<div class="topic-term">GCE (Google Compute Engine)</div>
+<div class="topic-desc">Zonal. IaaS. VMs referred to as Instances. Full control and flexibility over: CPU/GPU, Memory, Disk Space, OS, Firewall Controls, Network Connection/Management (VPN/Load Balancing).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Instance Groups – Managed</div>
+<div class="topic-desc">Uses instance templates to create a group of identical resources. Benefits: Automatic scaling, load-balanced traffic distribution, automatic instance recreation on failure.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Managed – Zonal</div>
+<div class="topic-desc">Contains instances from the same zone. Choose if you want to avoid cross-zone latency or need fine-grained control of group sizes.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Managed – Regional</div>
+<div class="topic-desc">Contains instances from multiple zones across the region. Generally recommended — protects against zonal failures.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Instance Groups – Unmanaged</div>
+<div class="topic-desc">Groups of dissimilar instances. No autoscaling, rolling updates, or instance templates. Use for pre-existing configurations or dissimilar instances needing load balancing.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">GKE (Google Kubernetes Engine)</div>
+<div class="topic-desc">Regional. Manages applications, not machines. Powered by Kubernetes. Deploy containerised applications. No IAM integration — manage secrets manually for other GCP services. Production clusters require ≥3 nodes.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">App Engine – Standard</div>
+<div class="topic-desc">Regional. Zero-admin managed service. Supports: Python, Java, Go, PHP. Scales to zero.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">App Engine – Flexible</div>
+<div class="topic-desc">Docker-based. Supports: Java 8, Python 2.7/3.5, Node.js, Ruby, PHP, .NET Core, Go, and any custom Docker runtime.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Functions</div>
+<div class="topic-desc">Regional. FaaS (Serverless). Runs Node.js code in response to events (GCS, Pub/Sub, HTTP). Pay for CPU & RAM per 100ms. Massively horizontally scalable.</div>
+</div>
+</section>
+<section class="topic-section" id="storage">
+<h2 class="section-heading">Storage, DB & Transfer</h2>
+<div class="topic-card">
+<div class="topic-term">Local SSD</div>
+<div class="topic-desc">Zonal. Data encrypted at rest. 375GB SSD attached to each server. Data lost on instance shutdown (survives live migration). Pay for GB-month provisioned.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Persistent Disk</div>
+<div class="topic-desc">Zonal. Performance scales with volume size (below Local SSD speed). Resizable while in use (requires filesystem update in VM). Max file size: 10TB.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Snapshots</div>
+<div class="topic-desc">Global. Snapshot Persistent Disks to create machine images. Similar to AWS EBS snapshots.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud SQL</div>
+<div class="topic-desc">Regional. Fully Managed. Supports MySQL and PostgreSQL. Automatic replication, backup, and failover. Scaling is manual (vertical and horizontal).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Spanner</div>
+<div class="topic-desc">Regional / Multi-Regional / Global. Horizontally scalable. Strongly consistent (external consistency). Relational structure with non-relational horizontal scale. Supports SQL, ACID transactions. Scales from 1 to thousands of nodes; requires 3 nodes for production. Pay for provisioned node time and storage.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">BigQuery</div>
+<div class="topic-desc">Multi-Regional. Serverless, column-store data warehouse. Supports SQL. Pay for GBs scanned per query (cached results free), GB-months stored, and streaming inserts per GB.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Datastore</div>
+<div class="topic-desc">Regional / Multi-Regional. Fully Managed NoSQL DB. Similar to DynamoDB. Supports ACID transactions, SQL-like queries, Indexes, RESTful interface. Pay for GB-months storage and IO operations.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Bigtable</div>
+<div class="topic-desc">Regional. Fully Managed. Low latency, high throughput NoSQL DB. Used for large operational/analytical workloads. Supports HBase API. Integrates with Hadoop, Dataflow, Dataproc. Use when: storing 1TB+ structured data, very high write volume, single-digit ms latency requirements, or migrating from HBase.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Storage</div>
+<div class="topic-desc">Regional / Multi-Regional. Fully Managed. Strongly consistent for overwrite PUTs and DELETEs. Durability: 11 nines. Supports site hosting and lifecycle features.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Data Transfer Appliance</div>
+<div class="topic-desc">Rackable, high-capacity storage server. Physically ship data to GCS. Similar to AWS Snowball. Ingest only. 100TB or 480TB versions.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Storage Transfer Service</div>
+<div class="topic-desc">Global. Transfer data from S3, HTTP/HTTPS endpoints, or GCS buckets to a GCS bucket. Pay for data transfer actions.</div>
+</div>
+</section>
+<section class="topic-section" id="networking2">
+<h2 class="section-heading">Networking</h2>
+<div class="topic-card">
+<div class="topic-term">Google Domains</div>
+<div class="topic-desc">Global. Google's domain registrar. Built-in DNS or custom nameservers. Supports DNSSEC.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud DNS</div>
+<div class="topic-desc">Global. 100% uptime guarantee. Low latency globally. Supports DNSSEC. Pay for hosted zones (fixed fee) and DNS lookups.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Static IP</div>
+<div class="topic-desc">Regional & Global. Regional Static IP for GCE instances and Network LBs. Global Static IP (Anycast) for Global Load Balancers (HTTP(S), SSL Proxy, TCP Proxy). Pay for IPs not in use.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Load Balancing</div>
+<div class="topic-desc">Regional & Global. Built into SDN — handles spikes without prewarming. Regional Network LB: Session Affinity, forwarding rules by IP/protocol/port, Round Robin, Health Checks. Global LB: Multi-region failover for HTTP(S), SSL Proxy, TCP Proxy. Types: HTTP(S) LB, TCP LB, SSL Proxy, TCP Proxy, UDP LB.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud CDN</div>
+<div class="topic-desc">Global. Low-latency content delivery. Based on HTTP(S) CLB. Integrated with GCE and GCS. Supports GCP only (HTTP(S) LBs). Backend can be a GCS Bucket. Supports HTTP/2 and HTTPS. Pay for: POP-to-client network egress, HTTP(S) request volume, per cache invalidation request.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">VPC</div>
+<div class="topic-desc">Global. Global IPv4 unicast SDN for GCP resources. Subnets are Regional. Can be shared across projects or peered with other VPCs. Can enable private access to GCP services (e.g. BigQuery, GCS). Pay for certain services (e.g. VPN) and network egress.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Interconnect</div>
+<div class="topic-desc">Regional / Multi-Regional. Connects external networks to Google's network. Private Connections (RFC1918 IPs, with SLA): Dedicated Interconnect, Cloud VPN. Public Peering (Google public IPs only, no SLA): Direct Peering, Carrier Peering.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud VPN</div>
+<div class="topic-desc">Regional. IPsec VPN. Low-volume, persistent static connections between gateways. VPN Gateways must have static IP. Encrypted link to VPC into one subnet. Supports Static and Dynamic routing. 99.9% SLA. Pay per tunnel-hour.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Dedicated Interconnect</div>
+<div class="topic-desc">Regional / Multi-Regional. Direct physical link between VPC and on-prem for high-volume connections. VLAN attachment is private but NOT encrypted — layer your own encryption. Redundant connections achieve 99.99% SLA; without redundancy: 99.9%. Pay per 10Gbps link plus per VLAN attachment.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Router</div>
+<div class="topic-desc">Regional. Dynamic BGP routing for hybrid networks. Works with Cloud VPN and Dedicated Interconnect. Automatically learns subnets and announces to on-prem. Free to set up; pay for VPC egress.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">CDN Interconnect</div>
+<div class="topic-desc">Regional / Multi-Regional. Direct, low-latency connectivity to external CDN providers (Akamai, Cloudflare, Fastly) with cheaper egress. Free to enable; pay less for configured egress.</div>
+</div>
+</section>
+<section class="topic-section" id="bigdata">
+<h2 class="section-heading">Big Data & IoT</h2>
+<div class="topic-card">
+<div class="topic-term">IoT Core</div>
+<div class="topic-desc">Global. Fully Managed. Connect, manage, and ingest data from devices globally via MQTT or HTTPS. CA-signed certs verify device ownership. Pay per MB of data exchanged.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Pub/Sub</div>
+<div class="topic-desc">Global. Infinitely scalable. At-least-once messaging for ingestion and decoupling. Pay for data volume (min 1KB per publish/push/pull request). Push mode: delivers to HTTPS endpoints, deletes on HTTP success. Pull mode: delivers to requesting clients, supports batching and long-polling.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Dataprep</div>
+<div class="topic-desc">Global. Visually explore, clean, and prep data for analysis without servers. Ad-hoc ETL for business analysts. Managed version of Trifacta Wrangler. Sources: GCS, BigQuery, File Upload (CSV/JSON/relational).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Dataproc</div>
+<div class="topic-desc">Zonal. Batch MapReduce via managed Spark & Hadoop clusters. Scales by adding/removing nodes while jobs run. Integrates with GCS, BigQuery, Bigtable, Stackdriver. Use to migrate existing Spark/Hadoop to GCP; use Dataflow for new pipelines.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Dataflow</div>
+<div class="topic-desc">Zonal. Fully Managed Apache Beam. Smartly autoscaled, dynamically redistributes lagging work mid-job. Batch or Stream MapReduce-like processing. Integrates with Pub/Sub, Datastore, BigQuery, Bigtable, Cloud ML, Stackdriver.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Datalab</div>
+<div class="topic-desc">Regional. Interactive data exploration, analysis, visualisation, and ML. Uses Jupyter Notebook.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Data Studio</div>
+<div class="topic-desc">Global. Big Data visualisation tool for dashboards and reporting. Similar to AWS QuickSight and Tableau.</div>
+</div>
+</section>
+<section class="topic-section" id="operations">
+<h2 class="section-heading">Operations & Management</h2>
+<div class="topic-card">
+<div class="topic-term">Stackdriver</div>
+<div class="topic-desc">Global. Family of services for monitoring, logging, and diagnosing apps on GCP and AWS.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Stackdriver Monitoring</div>
+<div class="topic-desc">Provides visibility into performance, uptime, and overall health of cloud apps. Built-in custom metrics, dashboards, global uptime monitoring, and alerts. Premium supports AWS. Alerts via email and GCP Mobile App (Premium: SMS, Slack, SNS, HipChat, webhook).</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Stackdriver Logging</div>
+<div class="topic-desc">Store, search, analyse, and alert on log data and events. Based on Fluentd. Create real-time metrics from logs. Export to BigQuery for advanced analytics or to GCS before expiry.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Stackdriver Reporting</div>
+<div class="topic-desc">Counts, analyses, aggregates, and tracks crashes in a centralised interface. Alerts on new errors. Supports: Java, Python, JavaScript, Ruby, C#, PHP, Go.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Stackdriver Trace</div>
+<div class="topic-desc">Tracks and displays call trees and timings across distributed systems. Automatically captures traces from App Engine. Zipkin collector support.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Stackdriver Debugger</div>
+<div class="topic-desc">Grabs program state (callstack, vars, expressions) in live deployments. Source view supports: Cloud Source Repository, GitHub, Bitbucket, Local/Upload. Free to use.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Deployment Manager</div>
+<div class="topic-desc">Global. Similar to Terraform and CloudFormation. Create and manage resources via declarative templates written in YAML, Python, or Jinja2. Supports input/output parameters and deployment preview.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Billing API</div>
+<div class="topic-desc">Global. Programmatically manage billing for GCP projects and get GCP pricing.</div>
+</div>
+</section>
+<section class="topic-section" id="development">
+<h2 class="section-heading">Development & APIs</h2>
+<div class="topic-card">
+<div class="topic-term">Cloud Endpoints</div>
+<div class="topic-desc">Global. Handles auth, monitoring, logging, and API keys for APIs backed by GCP. Based on NGINX; runs as an ESP (Extensible Service Proxy) container hooking into Cloud Load Balancer. Uses JWT. Integrates with Firebase, Auth0, and Google Auth. Pay per API call.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">Cloud Shell</div>
+<div class="topic-desc">Pre-configured Google SDK Linux instance. Automatic auth based on GCP Console login. Accessible via any web browser. All client libs pre-installed. 5GB persistent storage. For direct/interactive use only.</div>
+</div>
+<div class="topic-card">
+<div class="topic-term">gcloud CLI</div>
+<div class="topic-desc">Manage GCP resources. Format: gcloud [GROUP] [GROUP] [COMMAND] --arguments. Example: gcloud compute instances create instance-1 --zone us-central1-a. gcloud alpha: not ready for production. gcloud beta: completed feature being tested for production.</div>
+</div>
+</section>
 
-        <div class="content-card">
-            <div id="markdown-viewer" class="markdown-body"></div>
-        </div>
-    </main>
+</main>
+<script>
+// Active nav highlight on scroll
+const sections = document.querySelectorAll('.topic-section');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector('.nav-link[data-target="' + e.target.id + '"]');
+      if(active) active.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
 
-    <!-- Toggle FAB -->
-    <button class="fab" onclick="toggleSidebar()">
-        <i class="fa-solid fa-bars"></i>
-    </button>
-
-    <script>
-        const contents = {
-            1: "# Google Cloud Professional Cloud Architect Master Cheat Sheet - Part 1\n\n# Google's Infrastructure\n\n### \ud83c\udf10 English\n- **Backbone**: Global, meshed backbone network to interconnect data centers and deliver traffic to Edge Points of Presence (POPs).\n- **PoPs**: 70+ edge PoPs in 33 countries.\n- **Edge Caching**: Caching platform sitting on top of infrastructure.\n- **Regions**: Specific geographical locations (e.g., us-central1). Regional resources are available to any zone in the region.\n- **Zones**: Isolated locations within a region (e.g., us-central1-a).\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\ubc31\ubcf8 (Backbone)**: \ub370\uc774\ud130 \uc13c\ud130\ub97c \uc0c1\ud638 \uc5f0\uacb0\ud558\uace0 Edge PoP\ub85c \ud2b8\ub798\ud53d\uc744 \uc804\ub2ec\ud558\ub294 \uae00\ub85c\ubc8c \uba54\uc2dc \ubc31\ubcf8 \ub124\ud2b8\uc6cc\ud06c\uc785\ub2c8\ub2e4.\n- **PoP (Points of Presence)**: 33\uac1c\uad6d\uc5d0 70\uac1c \uc774\uc0c1\uc758 \uc5d0\uc9c0 PoP\uac00 \uc788\uc2b5\ub2c8\ub2e4.\n- **\uc5d0\uc9c0 \uce90\uc2f1 (Edge Caching)**: \uc778\ud504\ub77c \uc704\uc5d0 \uc704\uce58\ud55c \uce90\uc2f1 \ud50c\ub7ab\ud3fc\uc785\ub2c8\ub2e4.\n- **\ub9ac\uc804 (Regions)**: \ub9ac\uc18c\uc2a4\ub97c \uc2e4\ud589\ud560 \uc218 \uc788\ub294 \ud2b9\uc815 \uc9c0\ub9ac\uc801 \uc704\uce58(\uc608: us-central1)\uc785\ub2c8\ub2e4. \ub9ac\uc804 \ub9ac\uc18c\uc2a4\ub294 \ud574\ub2f9 \ub9ac\uc804 \ub0b4\uc758 \ubaa8\ub4e0 \uc601\uc5ed\uc5d0\uc11c \uc0ac\uc6a9\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4.\n- **\uc601\uc5ed (Zones)**: \ub9ac\uc804 \ub0b4\uc758 \uaca9\ub9ac\ub41c \uc704\uce58(\uc608: us-central1-a)\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Global[Global Infrastructure] --> Region1[Region: us-central1]\n    Global --> Region2[Region: asia-northeast3]\n    Region1 --> ZoneA[Zone: us-central1-a]\n    Region1 --> ZoneB[Zone: us-central1-b]\n    Region2 --> ZoneC[Zone: asia-northeast3-a]\n```\n\n### \u2753 Q&A\n- **Q:** What is the main difference between a Region and a Zone?\n- **Q (\ud55c\uae00):** \ub9ac\uc804(Region)\uacfc \uc601\uc5ed(Zone)\uc758 \uac00\uc7a5 \ud070 \ucc28\uc774\uc810\uc740 \ubb34\uc5c7\uc778\uac00\uc694?\n- **A:** A Region is a specific geographical area containing multiple Zones, which are isolated failure domains.\n- **A (\ud55c\uae00):** \ub9ac\uc804\uc740 \uc5ec\ub7ec \uc601\uc5ed\uc744 \ud3ec\ud568\ud558\ub294 \ud2b9\uc815 \uc9c0\ub9ac\uc801 \uc704\uce58\uc774\uba70, \uc601\uc5ed\uc740 \ub9ac\uc804 \ub0b4\uc758 \uaca9\ub9ac\ub41c \uc7a5\uc560 \ub3c4\uba54\uc778\uc785\ub2c8\ub2e4.\n\n---\n\n# GCP Networking Fundamentals\n\n### \ud83c\udf10 English\n- **Pricing**: Ingress is free, Egress is charged. Sustained-use discounts apply automatically up to 30%.\n- **Security**: All data is encrypted at rest. BeyondCorp security model shifts access from perimeter to identity.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\uac00\uaca9 \uc815\ucc45**: \uc218\uc2e0(Ingress) \ud2b8\ub798\ud53d\uc740 \ubb34\ub8cc\uc774\uba70, \uc1a1\uc2e0(Egress) \ud2b8\ub798\ud53d\uc740 \uc720\ub8cc\uc785\ub2c8\ub2e4. \uc9c0\uc18d \uc0ac\uc6a9 \ud560\uc778(Sustained-use discounts)\uc740 \uc790\ub3d9\uc73c\ub85c \uc801\uc6a9\ub418\uc5b4 \ucd5c\ub300 30%\uae4c\uc9c0 \ud560\uc778\ub429\ub2c8\ub2e4.\n- **\ubcf4\uc548**: \uc800\uc7a5\ub41c \ubaa8\ub4e0 \ub370\uc774\ud130\ub294 \uc554\ud638\ud654\ub429\ub2c8\ub2e4(Encryption at rest). BeyondCorp \ubcf4\uc548 \ubaa8\ub378\uc740 \ub124\ud2b8\uc6cc\ud06c \uacbd\uacc4\uc5d0\uc11c \uc0ac\uc6a9\uc790 \ubc0f \uae30\uae30 ID\ub85c \uc81c\uc5b4\uc758 \uc911\uc2ec\uc744 \uc774\ub3d9\ud569\ub2c8\ub2e4.\n\n### \u2753 Q&A\n- **Q:** How are sustained-use discounts enabled?\n- **Q (\ud55c\uae00):** \uc9c0\uc18d \uc0ac\uc6a9 \ud560\uc778\uc740 \uc5b4\ub5bb\uac8c \ud65c\uc131\ud654\ud558\ub098\uc694?\n- **A:** They are applied automatically; no action is required.\n- **A (\ud55c\uae00):** \uc790\ub3d9\uc73c\ub85c \uc801\uc6a9\ub418\ubbc0\ub85c \ubcc4\ub3c4\uc758 \uc870\uce58\uac00 \ud544\uc694\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.\n\n---\n\n# Resource Hierarchy & IAM\n\n### \ud83c\udf10 English\n- **Hierarchy**: Organization \u2794 Folders \u2794 Projects \u2794 Resources.\n- **IAM**: Members (Who) \u2794 Roles (What) \u2794 Resources.\n- **Service Accounts**: Special accounts for applications, not users.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\ub9ac\uc18c\uc2a4 \uacc4\uce35 \uad6c\uc870**: \uc870\uc9c1(Organization) \u2794 \ud3f4\ub354(Folders) \u2794 \ud504\ub85c\uc81d\ud2b8(Projects) \u2794 \ub9ac\uc18c\uc2a4(Resources).\n- **IAM (ID \ubc0f \uc561\uc138\uc2a4 \uad00\ub9ac)**: \uad6c\uc131\uc6d0(\ub204\uac00) \u2794 \uc5ed\ud560(\ubb34\uc5c7\uc744) \u2794 \ub9ac\uc18c\uc2a4.\n- **\uc11c\ube44\uc2a4 \uacc4\uc815**: \uc0ac\uc6a9\uc790\uac00 \uc544\ub2cc \uc560\ud50c\ub9ac\ucf00\uc774\uc158\uc744 \uc704\ud55c \ud2b9\uc218 \uacc4\uc815\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Org[Organization] --> Folder[Folder]\n    Folder --> Project[Project]\n    Project --> Res[Resources: GCE, GCS, etc.]\n    \n    Member[User/Service Account] -->|Assigned| Role[IAM Role]\n    Role -->|Grants Access to| Project\n```\n\n### \u2753 Q&A\n- **Q:** Can a GCP resource belong to multiple projects?\n- **Q (\ud55c\uae00):** GCP \ub9ac\uc18c\uc2a4\uac00 \uc5ec\ub7ec \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc18d\ud560 \uc218 \uc788\ub098\uc694?\n- **A:** No, a resource can only have one parent project.\n- **A (\ud55c\uae00):** \uc544\ub2c8\uc694, \ub9ac\uc18c\uc2a4\ub294 \ud558\ub098\uc758 \uc0c1\uc704 \ud504\ub85c\uc81d\ud2b8\ub9cc \uac00\uc9c8 \uc218 \uc788\uc2b5\ub2c8\ub2e4.\n\n---\n\n# Compute Options: GCE\n\n### \ud83c\udf10 English\n- **GCE**: Zonal IaaS VMs.\n- **MIGs**: Managed Instance Groups for auto-scaling and high availability.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **GCE (Compute Engine)**: \uc601\uc5ed(Zonal) \uae30\ubc18\uc758 IaaS \uac00\uc0c1 \uba38\uc2e0\uc785\ub2c8\ub2e4.\n- **MIG (\uad00\ub9ac\ud615 \uc778\uc2a4\ud134\uc2a4 \uadf8\ub8f9)**: \uc790\ub3d9 \ud655\uc7a5(Auto-scaling) \ubc0f \uace0\uac00\uc6a9\uc131\uc744 \uc704\ud55c \uad00\ub9ac\ud615 \uc778\uc2a4\ud134\uc2a4 \uadf8\ub8f9\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph LR\n    LB[Load Balancer] --> MIG[Managed Instance Group]\n    MIG --> VM1[VM Instance 1]\n    MIG --> VM2[VM Instance 2]\n    MIG --> VM3[VM Instance 3]\n    style MIG fill:#f9f,stroke:#333,stroke-width:2px\n```\n\n### \u2753 Q&A\n- **Q:** When should you use an Unmanaged Instance Group?\n- **Q (\ud55c\uae00):** \ube44\uad00\ub9ac\ud615 \uc778\uc2a4\ud134\uc2a4 \uadf8\ub8f9(Unmanaged Instance Group)\uc740 \uc5b8\uc81c \uc0ac\uc6a9\ud574\uc57c \ud558\ub098\uc694?\n- **A:** For dissimilar instances that require load balancing without auto-scaling.\n- **A (\ud55c\uae00):** \uc790\ub3d9 \ud655\uc7a5 \uc5c6\uc774 \ubd80\ud558 \ubd84\uc0b0(Load balancing)\uc774 \ud544\uc694\ud55c \uc11c\ub85c \ub2e4\ub978 \uad6c\uc131\uc758 \uc778\uc2a4\ud134\uc2a4\ub4e4\uc5d0 \uc0ac\uc6a9\ud569\ub2c8\ub2e4.\n",
-            2: "# Google Cloud Professional Cloud Architect Master Cheat Sheet - Part 2\n\n# Compute Options: GKE & App Engine\n\n### \ud83c\udf10 English\n- **GKE**: Managed Kubernetes for containerized apps.\n- **App Engine Standard**: Zero-admin, scales to zero. Specific runtimes.\n- **App Engine Flexible**: Docker-based, custom runtimes, background processes.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **GKE (Kubernetes Engine)**: \ucee8\ud14c\uc774\ub108\ud654\ub41c \uc571\uc744 \uc704\ud55c \uad00\ub9ac\ud615 \ucfe0\ubc84\ub124\ud2f0\uc2a4 \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n- **App Engine \ud45c\uc900**: \uad00\ub9ac \ubd88\ud544\uc694, 0\uc73c\ub85c \ud655\uc7a5 \uac00\ub2a5. \ud2b9\uc815 \ub7f0\ud0c0\uc784\ub9cc \uc9c0\uc6d0.\n- **App Engine \uac00\ubcc0**: Docker \uae30\ubc18, \ucee4\uc2a4\ud140 \ub7f0\ud0c0\uc784 \uc9c0\uc6d0, \ubc31\uadf8\ub77c\uc6b4\ub4dc \ud504\ub85c\uc138\uc2a4 \uac00\ub2a5.\n\n### \u2753 Q&A\n- **Q:** What is the main criteria to choose App Engine Flexible over Standard?\n- **Q (\ud55c\uae00):** App Engine \ud45c\uc900 \ub300\uc2e0 \uac00\ubcc0 \ud658\uacbd\uc744 \uc120\ud0dd\ud558\ub294 \uc8fc\uc694 \uae30\uc900\uc740 \ubb34\uc5c7\uc778\uac00\uc694?\n- **A:** Need for custom runtimes (via Docker) or background processes.\n- **A (\ud55c\uae00):** (Docker\ub97c \ud1b5\ud55c) \ucee4\uc2a4\ud140 \ub7f0\ud0c0\uc784\uc774\ub098 \ubc31\uadf8\ub77c\uc6b4\ub4dc \ud504\ub85c\uc138\uc2a4\uac00 \ud544\uc694\ud55c \uacbd\uc6b0\uc785\ub2c8\ub2e4.\n\n---\n\n# Storage & Databases\n\n### \ud83c\udf10 English\n- **Cloud Storage**: Object storage (unstructured).\n- **Cloud SQL**: Managed relational (MySQL, Postgres).\n- **Cloud Spanner**: Horizontally scalable, strongly consistent relational DB.\n- **Firestore (Datastore)**: NoSQL document DB.\n- **Bigtable**: High-throughput NoSQL for heavy workloads.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Cloud Storage**: \uac1d\uccb4 \uc800\uc7a5\uc18c (\ube44\uc815\ud615 \ub370\uc774\ud130).\n- **Cloud SQL**: \uad00\ub9ac\ud615 \uad00\uacc4\ud615 DB (MySQL, Postgres).\n- **Cloud Spanner**: \uc218\ud3c9 \ud655\uc7a5\uc774 \uac00\ub2a5\ud558\uace0 \uac15\ub825\ud55c \uc77c\uad00\uc131\uc744 \uc81c\uacf5\ud558\ub294 \uad00\uacc4\ud615 DB.\n- **Firestore (Datastore)**: NoSQL \ubb38\uc11c DB.\n- **Bigtable**: \ub300\uaddc\ubaa8 \uc6cc\ud06c\ub85c\ub4dc\ub97c \uc704\ud55c \uace0\ucc98\ub9ac\ub7c9 NoSQL DB.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Data[Data Type?] -->|Unstructured| GCS[Cloud Storage]\n    Data -->|Structured| Type[Relational or NoSQL?]\n    Type -->|Relational| Rel[Scale required?]\n    Rel -->|Vertical| SQL[Cloud SQL]\n    Rel -->|Horizontal| Spanner[Cloud Spanner]\n    Type -->|NoSQL| NoSQL[Latency/Throughput?]\n    NoSQL -->|Mobile/Web| Firestore[Firestore]\n    NoSQL -->|Analytics/IoT| Bigtable[Bigtable]\n```\n\n### \u2753 Q&A\n- **Q:** When should you choose Cloud Spanner over Cloud SQL?\n- **Q (\ud55c\uae00):** Cloud SQL \ub300\uc2e0 Cloud Spanner\ub97c \uc120\ud0dd\ud574\uc57c \ud558\ub294 \uacbd\uc6b0\ub294 \uc5b8\uc81c\uc778\uac00\uc694?\n- **A:** When you need global scale, horizontal writing capacity, and relational features.\n- **A (\ud55c\uae00):** \uae00\ub85c\ubc8c \uaddc\ubaa8\uc758 \uc218\ud3c9\uc801 \uc4f0\uae30 \ud655\uc7a5\uc131\uacfc \uad00\uacc4\ud615 DB \uae30\ub2a5\uc774 \ubaa8\ub450 \ud544\uc694\ud55c \uacbd\uc6b0\uc785\ub2c8\ub2e4.\n\n---\n\n# Networking & Load Balancing\n\n### \ud83c\udf10 English\n- **Cloud Load Balancing**: Global vs Regional, Layer 4 vs Layer 7.\n- **Cloud CDN**: Edge delivery for HTTP(S) Load Balancer.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\ubd80\ud558 \ubd84\uc0b0 (Cloud Load Balancing)**: \uae00\ub85c\ubc8c vs \ub9ac\uc804, Layer 4 vs Layer 7.\n- **Cloud CDN**: HTTP(S) \ubd80\ud558 \ubd84\uc0b0\uae30\ub97c \uc704\ud55c \uc5d0\uc9c0 \uce90\uc2f1 \uc804\uc1a1 \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Traffic[Incoming Traffic] -->|HTTP/S| L7[L7 Global HTTP/S LB]\n    Traffic -->|TCP/UDP| L4[L4 Network LB]\n    L7 --> Backends[GCE / GKE Backends]\n    L4 --> Backends\n```\n\n### \u2753 Q&A\n- **Q:** Which Load Balancer is required to use Cloud CDN?\n- **Q (\ud55c\uae00):** Cloud CDN\uc744 \uc0ac\uc6a9\ud558\ub824\uba74 \uc5b4\ub5a4 \ubd80\ud558 \ubd84\uc0b0\uae30\uac00 \ud544\uc694\ud55c\uac00\uc694?\n- **A:** Global HTTP(S) Load Balancer.\n- **A (\ud55c\uae00):** \uae00\ub85c\ubc8c HTTP(S) \ubd80\ud558 \ubd84\uc0b0\uae30\uc785\ub2c8\ub2e4.\n",
-            3: "# Google Cloud Professional Cloud Architect Master Cheat Sheet - Part 3\n\n# Hybrid Connectivity\n\n### \ud83c\udf10 English\n- **Cloud VPN**: IPsec over public internet. 99.9% SLA.\n- **Dedicated Interconnect**: Direct physical connection. 99.99% SLA (with redundancy).\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Cloud VPN**: \uacf5\uc6a9 \uc778\ud130\ub137\uc744 \ud1b5\ud55c IPsec VPN\uc785\ub2c8\ub2e4. 99.9% SLA.\n- **Dedicated Interconnect**: \uc9c1\uc811\uc801\uc778 \ubb3c\ub9ac\uc801 \uc5f0\uacb0\uc785\ub2c8\ub2e4. (\uc774\uc911\ud654 \uad6c\uc131 \uc2dc) 99.99% SLA.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph LR\n    OnPrem[On-Premise DC] -->|Public Internet| VPN[Cloud VPN]\n    OnPrem -->|Physical Fiber| Interconnect[Dedicated Interconnect]\n    VPN --> VPC[Google Cloud VPC]\n    Interconnect --> VPC\n```\n\n### \u2753 Q&A\n- **Q:** What is the recommended SLA for Dedicated Interconnect?\n- **Q (\ud55c\uae00):** Dedicated Interconnect\uc758 \uad8c\uc7a5 SLA\ub294 \uc5b4\ub5bb\uac8c \ub418\ub098\uc694?\n- **A:** 99.99%, which requires configuring redundant connections.\n- **A (\ud55c\uae00):** 99.99% \uc774\uba70, \uc774\ub97c \uc704\ud574\uc11c\ub294 \uc774\uc911\ud654 \uc5f0\uacb0 \uad6c\uc131\uc774 \ud544\uc694\ud569\ub2c8\ub2e4.\n\n---\n\n# Big Data & Analytics\n\n### \ud83c\udf10 English\n- **Pub/Sub**: Global messaging glue.\n- **Dataflow**: Apache Beam for stream/batch processing.\n- **Dataproc**: Managed Hadoop/Spark.\n- **BigQuery**: Serverless data warehouse.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Pub/Sub**: \uae00\ub85c\ubc8c \uba54\uc2dc\uc9d5 \ud5c8\ube0c \uc5ed\ud560\uc744 \ud569\ub2c8\ub2e4.\n- **Dataflow**: \uc2a4\ud2b8\ub9bc \ubc0f \ubc30\uce58 \ucc98\ub9ac\ub97c \uc704\ud55c Apache Beam \uae30\ubc18 \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n- **Dataproc**: \uad00\ub9ac\ud615 Hadoop/Spark \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n- **BigQuery**: \uc11c\ubc84\ub9ac\uc2a4 \ub370\uc774\ud130 \uc6e8\uc5b4\ud558\uc6b0\uc2a4\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph LR\n    IoT[IoT Devices] --> PubSub[Pub/Sub]\n    PubSub --> Dataflow[Dataflow]\n    Dataflow --> BigQuery[BigQuery]\n    BigQuery --> Looker[Looker/Data Studio]\n```\n\n### \u2753 Q&A\n- **Q:** When should you choose Dataproc over Dataflow?\n- **Q (\ud55c\uae00):** Dataflow \ub300\uc2e0 Dataproc\uc744 \uc120\ud0dd\ud574\uc57c \ud558\ub294 \uacbd\uc6b0\ub294 \uc5b8\uc81c\uc778\uac00\uc694?\n- **A:** To migrate existing Hadoop/Spark workloads without rewriting code.\n- **A (\ud55c\uae00):** \uae30\uc874\uc758 Hadoop/Spark \uc6cc\ud06c\ub85c\ub4dc\ub97c \ucf54\ub4dc \uc218\uc815 \uc5c6\uc774 \uadf8\ub300\ub85c \ub9c8\uc774\uadf8\ub808\uc774\uc158\ud560 \ub54c\uc785\ub2c8\ub2e4.\n\n---\n\n# Operations & Management\n\n### \ud83c\udf10 English\n- **Stackdriver (Cloud Operations)**: Monitoring, Logging, Trace, Debugger, Profiler.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Cloud Operations (\uad6c Stackdriver)**: \ubaa8\ub2c8\ud130\ub9c1, \ub85c\uae45, \ucd94\uc801, \ub514\ubc84\uac70, \ud504\ub85c\ud30c\uc77c\ub7ec \uae30\ub2a5\uc774 \ud3ec\ud568\ub418\uc5b4 \uc788\uc2b5\ub2c8\ub2e4.\n\n### \u2753 Q&A\n- **Q:** How can you track application latency across microservices?\n- **Q (\ud55c\uae00):** \ub9c8\uc774\ud06c\ub85c\uc11c\ube44\uc2a4 \uc804\uccb4\uc5d0\uc11c \uc560\ud50c\ub9ac\ucf00\uc774\uc158 \uc9c0\uc5f0 \uc2dc\uac04\uc744 \uc5b4\ub5bb\uac8c \ucd94\uc801\ud560 \uc218 \uc788\ub098\uc694?\n- **A:** Use Cloud Trace.\n- **A (\ud55c\uae00):** Cloud Trace\ub97c \uc0ac\uc6a9\ud569\ub2c8\ub2e4.\n"
-        };
-
-        // Initialize Mermaid
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: 'dark',
-            themeVariables: {
-                primaryColor: '#1e293b',
-                primaryTextColor: '#f3f4f6',
-                primaryBorderColor: '#475569',
-                lineColor: '#60a5fa',
-                secondaryColor: '#334155',
-                tertiaryColor: '#0f172a'
-            }
-        });
-
-        // Custom Renderer for visual separation
-        const customRenderer = {
-            heading({ text, level }) {
-                if (level === 2) {
-                    return `<h2 class="section-title">${text}</h2>`;
-                }
-                return `<h${level}>${text}</h${level}>`;
-            },
-            code({ text, lang }) {
-                if (lang === 'mermaid') {
-                    return `<div class="mermaid">${text}</div>`;
-                }
-                return `<pre><code class="language-${lang}">${text}</code></pre>`;
-            }
-        };
-
-        marked.use({ renderer: customRenderer });
-
-        function formatEnhancedContent(rawHtml) {
-            let div = document.createElement('div');
-            div.innerHTML = rawHtml;
-
-            // Wrap English sections
-            let enHeaders = Array.from(div.querySelectorAll('h3')).filter(h => h.textContent.includes('English') || h.textContent.includes('🌐'));
-            enHeaders.forEach(h => {
-                let wrapper = document.createElement('div');
-                wrapper.className = 'section-block lang-en-block';
-                h.parentNode.insertBefore(wrapper, h);
-                let next = h.nextElementSibling;
-                wrapper.appendChild(h);
-                while (next && next.tagName !== 'H3' && !next.classList.contains('section-title')) {
-                    let temp = next;
-                    next = next.nextElementSibling;
-                    wrapper.appendChild(temp);
-                }
-            });
-
-            // Wrap Korean sections
-            let koHeaders = Array.from(div.querySelectorAll('h3')).filter(h => h.textContent.includes('한국어') || h.textContent.includes('🇰🇷'));
-            koHeaders.forEach(h => {
-                let wrapper = document.createElement('div');
-                wrapper.className = 'section-block lang-ko-block';
-                h.parentNode.insertBefore(wrapper, h);
-                let next = h.nextElementSibling;
-                wrapper.appendChild(h);
-                while (next && next.tagName !== 'H3' && !next.classList.contains('section-title') && !next.classList.contains('mermaid')) {
-                    let temp = next;
-                    next = next.nextElementSibling;
-                    wrapper.appendChild(temp);
-                }
-            });
-
-            // Wrap QA sections
-            let qaHeaders = Array.from(div.querySelectorAll('h3')).filter(h => h.textContent.includes('Q&A') || h.textContent.includes('❓'));
-            qaHeaders.forEach(h => {
-                let wrapper = document.createElement('div');
-                wrapper.className = 'qa-block';
-                h.parentNode.insertBefore(wrapper, h);
-                let next = h.nextElementSibling;
-                wrapper.appendChild(h);
-                while (next && next.tagName !== 'H3' && !next.classList.contains('section-title')) {
-                    let temp = next;
-                    next = next.nextElementSibling;
-                    wrapper.appendChild(temp);
-                }
-            });
-
-            return div.innerHTML;
-        }
-
-        function renderContent(tab) {
-            const viewer = document.getElementById('markdown-viewer');
-            const rawHtml = marked.parse(contents[tab]);
-            viewer.innerHTML = formatEnhancedContent(rawHtml);
-            
-            // Re-render Mermaid
-            setTimeout(() => {
-                mermaid.run();
-            }, 100);
-
-            generateTOC();
-            document.getElementById('main-content').scrollTop = 0;
-        }
-
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-btn').forEach((btn, index) => {
-                btn.classList.toggle('active', index + 1 === tab);
-            });
-            renderContent(tab);
-        }
-
-        function generateTOC() {
-            const toc = document.getElementById('toc');
-            toc.innerHTML = '';
-            const viewer = document.getElementById('markdown-viewer');
-            const headers = viewer.querySelectorAll('.section-title');
-            
-            headers.forEach((header, index) => {
-                const id = 'header-' + index;
-                header.id = id;
-                
-                const item = document.createElement('div');
-                item.className = 'toc-item';
-                
-                const link = document.createElement('a');
-                link.className = 'toc-link';
-                link.textContent = header.textContent.trim();
-                link.onclick = () => {
-                    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
-                };
-                
-                item.appendChild(link);
-                toc.appendChild(item);
-            });
-        }
-
-        function handleSearch(query) {
-            const links = document.querySelectorAll('.toc-link');
-            links.forEach(link => {
-                const text = link.textContent.toLowerCase();
-                const matches = text.includes(query.toLowerCase());
-                link.parentElement.style.display = matches ? 'block' : 'none';
-            });
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-        }
-
-        // First Render
-        renderContent(1);
-    </script>
+// Search filter
+document.getElementById('search-input').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('.topic-card').forEach(c => {
+    const text = c.textContent.toLowerCase();
+    c.style.display = text.includes(q) || q === '' ? '' : 'none';
+  });
+  if(q) {
+    document.querySelectorAll('.topic-section').forEach(s => {
+      const visible = [...s.querySelectorAll('.topic-card')].some(c => c.style.display !== 'none');
+      s.style.display = visible ? '' : 'none';
+    });
+  } else {
+    document.querySelectorAll('.topic-section').forEach(s => s.style.display = '');
+  }
+});
+</script>
 </body>
 </html>
