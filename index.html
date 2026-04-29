@@ -384,23 +384,22 @@
         });
 
         // Custom Renderer for visual separation
-        const renderer = new marked.Renderer();
-        
-        renderer.heading = function(text, level) {
-            if (level === 2) {
-                return `<h2 class="section-title">${text}</h2>`;
+        const customRenderer = {
+            heading({ text, level }) {
+                if (level === 2) {
+                    return `<h2 class="section-title">${text}</h2>`;
+                }
+                return `<h${level}>${text}</h${level}>`;
+            },
+            code({ text, lang }) {
+                if (lang === 'mermaid') {
+                    return `<div class="mermaid">${text}</div>`;
+                }
+                return `<pre><code class="language-${lang}">${text}</code></pre>`;
             }
-            return `<h${level}>${text}</h${level}>`;
         };
 
-        renderer.code = function(code, language) {
-            if (language === 'mermaid') {
-                return `<div class="mermaid">${code}</div>`;
-            }
-            return `<pre><code class="language-${language}">${code}</code></pre>`;
-        };
-
-        marked.setOptions({ renderer: renderer });
+        marked.use({ renderer: customRenderer });
 
         function formatEnhancedContent(rawHtml) {
             let div = document.createElement('div');
