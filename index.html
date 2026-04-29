@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCP Professional Cloud Architect - Premium Cheat Sheet</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Mermaid.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #111827 100%);
+            --card-bg: rgba(31, 41, 55, 0.4);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-blue: #60a5fa;
+            --accent-green: #34d399;
+            --accent-purple: #a78bfa;
+            --accent-coral: #fb7185;
+            --sidebar-width: 340px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-container {
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 14px 12px 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
+        }
+
+        #toc {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        #toc::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #toc::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .toc-item {
+            margin-bottom: 8px;
+        }
+
+        .toc-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .toc-link:hover {
+            color: var(--accent-blue);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .toc-link.active {
+            color: var(--text-primary);
+            background: rgba(96, 165, 250, 0.15);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        #main-content {
+            flex: 1;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 40px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        #main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #main-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 6px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            width: fit-content;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent-blue);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content Card */
+        .content-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* Markdown Sections styling */
+        .markdown-body h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 32px;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        .markdown-body h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 56px;
+            margin-bottom: 24px;
+            color: var(--accent-blue);
+            letter-spacing: -0.025em;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
+        }
+
+        .markdown-body p, .markdown-body ul {
+            line-height: 1.75;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        .markdown-body li {
+            margin-bottom: 12px;
+        }
+
+        .markdown-body li strong {
+            color: var(--text-primary);
+        }
+
+        /* Custom Containers for visual separation */
+        .section-block {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .lang-en-block {
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .lang-ko-block {
+            border-left: 4px solid var(--accent-green);
+            background: rgba(52, 211, 153, 0.02);
+        }
+
+        .qa-block {
+            background: rgba(167, 139, 250, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.15);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 32px;
+        }
+
+        .qa-block strong {
+            color: var(--accent-purple);
+        }
+
+        /* Mermaid */
+        .mermaid {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 24px;
+            border-radius: 16px;
+            margin: 32px 0;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* FAB */
+        .fab {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: var(--accent-blue);
+            color: #0b0f19;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: var(--accent-purple);
+            box-shadow: 0 10px 30px rgba(167, 139, 250, 0.4);
+        }
+
+        @media (max-width: 1024px) {
+            #sidebar { position: absolute; transform: translateX(-100%); }
+            #sidebar.open { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fa-solid fa-bolt"></i> GCP PCA Master</h1>
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input" placeholder="빠른 검색..." oninput="handleSearch(this.value)">
+            </div>
+        </div>
+        <div id="toc"></div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab(1)">Part 1: 핵심 인프라</button>
+            <button class="tab-btn" onclick="switchTab(2)">Part 2: 서비스 설계</button>
+            <button class="tab-btn" onclick="switchTab(3)">Part 3: 운영 및 마이그레이션</button>
+        </div>
+
+        <div class="content-card">
+            <div id="markdown-viewer" class="markdown-body"></div>
+        </div>
+    </main>
+
+    <!-- Toggle FAB -->
+    <button class="fab" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <script>
+        const contents = {
+            1: "# Google Cloud Professional Cloud Architect Master Cheat Sheet - Part 1\n\n# Google's Infrastructure\n\n### \ud83c\udf10 English\n- **Backbone**: Global, meshed backbone network to interconnect data centers and deliver traffic to Edge Points of Presence (POPs).\n- **PoPs**: 70+ edge PoPs in 33 countries.\n- **Edge Caching**: Caching platform sitting on top of infrastructure.\n- **Regions**: Specific geographical locations (e.g., us-central1). Regional resources are available to any zone in the region.\n- **Zones**: Isolated locations within a region (e.g., us-central1-a).\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\ubc31\ubcf8 (Backbone)**: \ub370\uc774\ud130 \uc13c\ud130\ub97c \uc0c1\ud638 \uc5f0\uacb0\ud558\uace0 Edge PoP\ub85c \ud2b8\ub798\ud53d\uc744 \uc804\ub2ec\ud558\ub294 \uae00\ub85c\ubc8c \uba54\uc2dc \ubc31\ubcf8 \ub124\ud2b8\uc6cc\ud06c\uc785\ub2c8\ub2e4.\n- **PoP (Points of Presence)**: 33\uac1c\uad6d\uc5d0 70\uac1c \uc774\uc0c1\uc758 \uc5d0\uc9c0 PoP\uac00 \uc788\uc2b5\ub2c8\ub2e4.\n- **\uc5d0\uc9c0 \uce90\uc2f1 (Edge Caching)**: \uc778\ud504\ub77c \uc704\uc5d0 \uc704\uce58\ud55c \uce90\uc2f1 \ud50c\ub7ab\ud3fc\uc785\ub2c8\ub2e4.\n- **\ub9ac\uc804 (Regions)**: \ub9ac\uc18c\uc2a4\ub97c \uc2e4\ud589\ud560 \uc218 \uc788\ub294 \ud2b9\uc815 \uc9c0\ub9ac\uc801 \uc704\uce58(\uc608: us-central1)\uc785\ub2c8\ub2e4. \ub9ac\uc804 \ub9ac\uc18c\uc2a4\ub294 \ud574\ub2f9 \ub9ac\uc804 \ub0b4\uc758 \ubaa8\ub4e0 \uc601\uc5ed\uc5d0\uc11c \uc0ac\uc6a9\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4.\n- **\uc601\uc5ed (Zones)**: \ub9ac\uc804 \ub0b4\uc758 \uaca9\ub9ac\ub41c \uc704\uce58(\uc608: us-central1-a)\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Global[Global Infrastructure] --> Region1[Region: us-central1]\n    Global --> Region2[Region: asia-northeast3]\n    Region1 --> ZoneA[Zone: us-central1-a]\n    Region1 --> ZoneB[Zone: us-central1-b]\n    Region2 --> ZoneC[Zone: asia-northeast3-a]\n```\n\n### \u2753 Q&A\n- **Q:** What is the main difference between a Region and a Zone?\n- **Q (\ud55c\uae00):** \ub9ac\uc804(Region)\uacfc \uc601\uc5ed(Zone)\uc758 \uac00\uc7a5 \ud070 \ucc28\uc774\uc810\uc740 \ubb34\uc5c7\uc778\uac00\uc694?\n- **A:** A Region is a specific geographical area containing multiple Zones, which are isolated failure domains.\n- **A (\ud55c\uae00):** \ub9ac\uc804\uc740 \uc5ec\ub7ec \uc601\uc5ed\uc744 \ud3ec\ud568\ud558\ub294 \ud2b9\uc815 \uc9c0\ub9ac\uc801 \uc704\uce58\uc774\uba70, \uc601\uc5ed\uc740 \ub9ac\uc804 \ub0b4\uc758 \uaca9\ub9ac\ub41c \uc7a5\uc560 \ub3c4\uba54\uc778\uc785\ub2c8\ub2e4.\n\n---\n\n# GCP Networking Fundamentals\n\n### \ud83c\udf10 English\n- **Pricing**: Ingress is free, Egress is charged. Sustained-use discounts apply automatically up to 30%.\n- **Security**: All data is encrypted at rest. BeyondCorp security model shifts access from perimeter to identity.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\uac00\uaca9 \uc815\ucc45**: \uc218\uc2e0(Ingress) \ud2b8\ub798\ud53d\uc740 \ubb34\ub8cc\uc774\uba70, \uc1a1\uc2e0(Egress) \ud2b8\ub798\ud53d\uc740 \uc720\ub8cc\uc785\ub2c8\ub2e4. \uc9c0\uc18d \uc0ac\uc6a9 \ud560\uc778(Sustained-use discounts)\uc740 \uc790\ub3d9\uc73c\ub85c \uc801\uc6a9\ub418\uc5b4 \ucd5c\ub300 30%\uae4c\uc9c0 \ud560\uc778\ub429\ub2c8\ub2e4.\n- **\ubcf4\uc548**: \uc800\uc7a5\ub41c \ubaa8\ub4e0 \ub370\uc774\ud130\ub294 \uc554\ud638\ud654\ub429\ub2c8\ub2e4(Encryption at rest). BeyondCorp \ubcf4\uc548 \ubaa8\ub378\uc740 \ub124\ud2b8\uc6cc\ud06c \uacbd\uacc4\uc5d0\uc11c \uc0ac\uc6a9\uc790 \ubc0f \uae30\uae30 ID\ub85c \uc81c\uc5b4\uc758 \uc911\uc2ec\uc744 \uc774\ub3d9\ud569\ub2c8\ub2e4.\n\n### \u2753 Q&A\n- **Q:** How are sustained-use discounts enabled?\n- **Q (\ud55c\uae00):** \uc9c0\uc18d \uc0ac\uc6a9 \ud560\uc778\uc740 \uc5b4\ub5bb\uac8c \ud65c\uc131\ud654\ud558\ub098\uc694?\n- **A:** They are applied automatically; no action is required.\n- **A (\ud55c\uae00):** \uc790\ub3d9\uc73c\ub85c \uc801\uc6a9\ub418\ubbc0\ub85c \ubcc4\ub3c4\uc758 \uc870\uce58\uac00 \ud544\uc694\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.\n\n---\n\n# Resource Hierarchy & IAM\n\n### \ud83c\udf10 English\n- **Hierarchy**: Organization \u2794 Folders \u2794 Projects \u2794 Resources.\n- **IAM**: Members (Who) \u2794 Roles (What) \u2794 Resources.\n- **Service Accounts**: Special accounts for applications, not users.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\ub9ac\uc18c\uc2a4 \uacc4\uce35 \uad6c\uc870**: \uc870\uc9c1(Organization) \u2794 \ud3f4\ub354(Folders) \u2794 \ud504\ub85c\uc81d\ud2b8(Projects) \u2794 \ub9ac\uc18c\uc2a4(Resources).\n- **IAM (ID \ubc0f \uc561\uc138\uc2a4 \uad00\ub9ac)**: \uad6c\uc131\uc6d0(\ub204\uac00) \u2794 \uc5ed\ud560(\ubb34\uc5c7\uc744) \u2794 \ub9ac\uc18c\uc2a4.\n- **\uc11c\ube44\uc2a4 \uacc4\uc815**: \uc0ac\uc6a9\uc790\uac00 \uc544\ub2cc \uc560\ud50c\ub9ac\ucf00\uc774\uc158\uc744 \uc704\ud55c \ud2b9\uc218 \uacc4\uc815\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Org[Organization] --> Folder[Folder]\n    Folder --> Project[Project]\n    Project --> Res[Resources: GCE, GCS, etc.]\n    \n    Member[User/Service Account] -->|Assigned| Role[IAM Role]\n    Role -->|Grants Access to| Project\n```\n\n### \u2753 Q&A\n- **Q:** Can a GCP resource belong to multiple projects?\n- **Q (\ud55c\uae00):** GCP \ub9ac\uc18c\uc2a4\uac00 \uc5ec\ub7ec \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc18d\ud560 \uc218 \uc788\ub098\uc694?\n- **A:** No, a resource can only have one parent project.\n- **A (\ud55c\uae00):** \uc544\ub2c8\uc694, \ub9ac\uc18c\uc2a4\ub294 \ud558\ub098\uc758 \uc0c1\uc704 \ud504\ub85c\uc81d\ud2b8\ub9cc \uac00\uc9c8 \uc218 \uc788\uc2b5\ub2c8\ub2e4.\n\n---\n\n# Compute Options: GCE\n\n### \ud83c\udf10 English\n- **GCE**: Zonal IaaS VMs.\n- **MIGs**: Managed Instance Groups for auto-scaling and high availability.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **GCE (Compute Engine)**: \uc601\uc5ed(Zonal) \uae30\ubc18\uc758 IaaS \uac00\uc0c1 \uba38\uc2e0\uc785\ub2c8\ub2e4.\n- **MIG (\uad00\ub9ac\ud615 \uc778\uc2a4\ud134\uc2a4 \uadf8\ub8f9)**: \uc790\ub3d9 \ud655\uc7a5(Auto-scaling) \ubc0f \uace0\uac00\uc6a9\uc131\uc744 \uc704\ud55c \uad00\ub9ac\ud615 \uc778\uc2a4\ud134\uc2a4 \uadf8\ub8f9\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph LR\n    LB[Load Balancer] --> MIG[Managed Instance Group]\n    MIG --> VM1[VM Instance 1]\n    MIG --> VM2[VM Instance 2]\n    MIG --> VM3[VM Instance 3]\n    style MIG fill:#f9f,stroke:#333,stroke-width:2px\n```\n\n### \u2753 Q&A\n- **Q:** When should you use an Unmanaged Instance Group?\n- **Q (\ud55c\uae00):** \ube44\uad00\ub9ac\ud615 \uc778\uc2a4\ud134\uc2a4 \uadf8\ub8f9(Unmanaged Instance Group)\uc740 \uc5b8\uc81c \uc0ac\uc6a9\ud574\uc57c \ud558\ub098\uc694?\n- **A:** For dissimilar instances that require load balancing without auto-scaling.\n- **A (\ud55c\uae00):** \uc790\ub3d9 \ud655\uc7a5 \uc5c6\uc774 \ubd80\ud558 \ubd84\uc0b0(Load balancing)\uc774 \ud544\uc694\ud55c \uc11c\ub85c \ub2e4\ub978 \uad6c\uc131\uc758 \uc778\uc2a4\ud134\uc2a4\ub4e4\uc5d0 \uc0ac\uc6a9\ud569\ub2c8\ub2e4.\n",
+            2: "# Google Cloud Professional Cloud Architect Master Cheat Sheet - Part 2\n\n# Compute Options: GKE & App Engine\n\n### \ud83c\udf10 English\n- **GKE**: Managed Kubernetes for containerized apps.\n- **App Engine Standard**: Zero-admin, scales to zero. Specific runtimes.\n- **App Engine Flexible**: Docker-based, custom runtimes, background processes.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **GKE (Kubernetes Engine)**: \ucee8\ud14c\uc774\ub108\ud654\ub41c \uc571\uc744 \uc704\ud55c \uad00\ub9ac\ud615 \ucfe0\ubc84\ub124\ud2f0\uc2a4 \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n- **App Engine \ud45c\uc900**: \uad00\ub9ac \ubd88\ud544\uc694, 0\uc73c\ub85c \ud655\uc7a5 \uac00\ub2a5. \ud2b9\uc815 \ub7f0\ud0c0\uc784\ub9cc \uc9c0\uc6d0.\n- **App Engine \uac00\ubcc0**: Docker \uae30\ubc18, \ucee4\uc2a4\ud140 \ub7f0\ud0c0\uc784 \uc9c0\uc6d0, \ubc31\uadf8\ub77c\uc6b4\ub4dc \ud504\ub85c\uc138\uc2a4 \uac00\ub2a5.\n\n### \u2753 Q&A\n- **Q:** What is the main criteria to choose App Engine Flexible over Standard?\n- **Q (\ud55c\uae00):** App Engine \ud45c\uc900 \ub300\uc2e0 \uac00\ubcc0 \ud658\uacbd\uc744 \uc120\ud0dd\ud558\ub294 \uc8fc\uc694 \uae30\uc900\uc740 \ubb34\uc5c7\uc778\uac00\uc694?\n- **A:** Need for custom runtimes (via Docker) or background processes.\n- **A (\ud55c\uae00):** (Docker\ub97c \ud1b5\ud55c) \ucee4\uc2a4\ud140 \ub7f0\ud0c0\uc784\uc774\ub098 \ubc31\uadf8\ub77c\uc6b4\ub4dc \ud504\ub85c\uc138\uc2a4\uac00 \ud544\uc694\ud55c \uacbd\uc6b0\uc785\ub2c8\ub2e4.\n\n---\n\n# Storage & Databases\n\n### \ud83c\udf10 English\n- **Cloud Storage**: Object storage (unstructured).\n- **Cloud SQL**: Managed relational (MySQL, Postgres).\n- **Cloud Spanner**: Horizontally scalable, strongly consistent relational DB.\n- **Firestore (Datastore)**: NoSQL document DB.\n- **Bigtable**: High-throughput NoSQL for heavy workloads.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Cloud Storage**: \uac1d\uccb4 \uc800\uc7a5\uc18c (\ube44\uc815\ud615 \ub370\uc774\ud130).\n- **Cloud SQL**: \uad00\ub9ac\ud615 \uad00\uacc4\ud615 DB (MySQL, Postgres).\n- **Cloud Spanner**: \uc218\ud3c9 \ud655\uc7a5\uc774 \uac00\ub2a5\ud558\uace0 \uac15\ub825\ud55c \uc77c\uad00\uc131\uc744 \uc81c\uacf5\ud558\ub294 \uad00\uacc4\ud615 DB.\n- **Firestore (Datastore)**: NoSQL \ubb38\uc11c DB.\n- **Bigtable**: \ub300\uaddc\ubaa8 \uc6cc\ud06c\ub85c\ub4dc\ub97c \uc704\ud55c \uace0\ucc98\ub9ac\ub7c9 NoSQL DB.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Data[Data Type?] -->|Unstructured| GCS[Cloud Storage]\n    Data -->|Structured| Type[Relational or NoSQL?]\n    Type -->|Relational| Rel[Scale required?]\n    Rel -->|Vertical| SQL[Cloud SQL]\n    Rel -->|Horizontal| Spanner[Cloud Spanner]\n    Type -->|NoSQL| NoSQL[Latency/Throughput?]\n    NoSQL -->|Mobile/Web| Firestore[Firestore]\n    NoSQL -->|Analytics/IoT| Bigtable[Bigtable]\n```\n\n### \u2753 Q&A\n- **Q:** When should you choose Cloud Spanner over Cloud SQL?\n- **Q (\ud55c\uae00):** Cloud SQL \ub300\uc2e0 Cloud Spanner\ub97c \uc120\ud0dd\ud574\uc57c \ud558\ub294 \uacbd\uc6b0\ub294 \uc5b8\uc81c\uc778\uac00\uc694?\n- **A:** When you need global scale, horizontal writing capacity, and relational features.\n- **A (\ud55c\uae00):** \uae00\ub85c\ubc8c \uaddc\ubaa8\uc758 \uc218\ud3c9\uc801 \uc4f0\uae30 \ud655\uc7a5\uc131\uacfc \uad00\uacc4\ud615 DB \uae30\ub2a5\uc774 \ubaa8\ub450 \ud544\uc694\ud55c \uacbd\uc6b0\uc785\ub2c8\ub2e4.\n\n---\n\n# Networking & Load Balancing\n\n### \ud83c\udf10 English\n- **Cloud Load Balancing**: Global vs Regional, Layer 4 vs Layer 7.\n- **Cloud CDN**: Edge delivery for HTTP(S) Load Balancer.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **\ubd80\ud558 \ubd84\uc0b0 (Cloud Load Balancing)**: \uae00\ub85c\ubc8c vs \ub9ac\uc804, Layer 4 vs Layer 7.\n- **Cloud CDN**: HTTP(S) \ubd80\ud558 \ubd84\uc0b0\uae30\ub97c \uc704\ud55c \uc5d0\uc9c0 \uce90\uc2f1 \uc804\uc1a1 \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph TD\n    Traffic[Incoming Traffic] -->|HTTP/S| L7[L7 Global HTTP/S LB]\n    Traffic -->|TCP/UDP| L4[L4 Network LB]\n    L7 --> Backends[GCE / GKE Backends]\n    L4 --> Backends\n```\n\n### \u2753 Q&A\n- **Q:** Which Load Balancer is required to use Cloud CDN?\n- **Q (\ud55c\uae00):** Cloud CDN\uc744 \uc0ac\uc6a9\ud558\ub824\uba74 \uc5b4\ub5a4 \ubd80\ud558 \ubd84\uc0b0\uae30\uac00 \ud544\uc694\ud55c\uac00\uc694?\n- **A:** Global HTTP(S) Load Balancer.\n- **A (\ud55c\uae00):** \uae00\ub85c\ubc8c HTTP(S) \ubd80\ud558 \ubd84\uc0b0\uae30\uc785\ub2c8\ub2e4.\n",
+            3: "# Google Cloud Professional Cloud Architect Master Cheat Sheet - Part 3\n\n# Hybrid Connectivity\n\n### \ud83c\udf10 English\n- **Cloud VPN**: IPsec over public internet. 99.9% SLA.\n- **Dedicated Interconnect**: Direct physical connection. 99.99% SLA (with redundancy).\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Cloud VPN**: \uacf5\uc6a9 \uc778\ud130\ub137\uc744 \ud1b5\ud55c IPsec VPN\uc785\ub2c8\ub2e4. 99.9% SLA.\n- **Dedicated Interconnect**: \uc9c1\uc811\uc801\uc778 \ubb3c\ub9ac\uc801 \uc5f0\uacb0\uc785\ub2c8\ub2e4. (\uc774\uc911\ud654 \uad6c\uc131 \uc2dc) 99.99% SLA.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph LR\n    OnPrem[On-Premise DC] -->|Public Internet| VPN[Cloud VPN]\n    OnPrem -->|Physical Fiber| Interconnect[Dedicated Interconnect]\n    VPN --> VPC[Google Cloud VPC]\n    Interconnect --> VPC\n```\n\n### \u2753 Q&A\n- **Q:** What is the recommended SLA for Dedicated Interconnect?\n- **Q (\ud55c\uae00):** Dedicated Interconnect\uc758 \uad8c\uc7a5 SLA\ub294 \uc5b4\ub5bb\uac8c \ub418\ub098\uc694?\n- **A:** 99.99%, which requires configuring redundant connections.\n- **A (\ud55c\uae00):** 99.99% \uc774\uba70, \uc774\ub97c \uc704\ud574\uc11c\ub294 \uc774\uc911\ud654 \uc5f0\uacb0 \uad6c\uc131\uc774 \ud544\uc694\ud569\ub2c8\ub2e4.\n\n---\n\n# Big Data & Analytics\n\n### \ud83c\udf10 English\n- **Pub/Sub**: Global messaging glue.\n- **Dataflow**: Apache Beam for stream/batch processing.\n- **Dataproc**: Managed Hadoop/Spark.\n- **BigQuery**: Serverless data warehouse.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Pub/Sub**: \uae00\ub85c\ubc8c \uba54\uc2dc\uc9d5 \ud5c8\ube0c \uc5ed\ud560\uc744 \ud569\ub2c8\ub2e4.\n- **Dataflow**: \uc2a4\ud2b8\ub9bc \ubc0f \ubc30\uce58 \ucc98\ub9ac\ub97c \uc704\ud55c Apache Beam \uae30\ubc18 \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n- **Dataproc**: \uad00\ub9ac\ud615 Hadoop/Spark \uc11c\ube44\uc2a4\uc785\ub2c8\ub2e4.\n- **BigQuery**: \uc11c\ubc84\ub9ac\uc2a4 \ub370\uc774\ud130 \uc6e8\uc5b4\ud558\uc6b0\uc2a4\uc785\ub2c8\ub2e4.\n\n### \ud83d\udcca Diagram\n```mermaid\ngraph LR\n    IoT[IoT Devices] --> PubSub[Pub/Sub]\n    PubSub --> Dataflow[Dataflow]\n    Dataflow --> BigQuery[BigQuery]\n    BigQuery --> Looker[Looker/Data Studio]\n```\n\n### \u2753 Q&A\n- **Q:** When should you choose Dataproc over Dataflow?\n- **Q (\ud55c\uae00):** Dataflow \ub300\uc2e0 Dataproc\uc744 \uc120\ud0dd\ud574\uc57c \ud558\ub294 \uacbd\uc6b0\ub294 \uc5b8\uc81c\uc778\uac00\uc694?\n- **A:** To migrate existing Hadoop/Spark workloads without rewriting code.\n- **A (\ud55c\uae00):** \uae30\uc874\uc758 Hadoop/Spark \uc6cc\ud06c\ub85c\ub4dc\ub97c \ucf54\ub4dc \uc218\uc815 \uc5c6\uc774 \uadf8\ub300\ub85c \ub9c8\uc774\uadf8\ub808\uc774\uc158\ud560 \ub54c\uc785\ub2c8\ub2e4.\n\n---\n\n# Operations & Management\n\n### \ud83c\udf10 English\n- **Stackdriver (Cloud Operations)**: Monitoring, Logging, Trace, Debugger, Profiler.\n\n### \ud83c\uddf0\ud83c\uddf7 \ud55c\uad6d\uc5b4\n- **Cloud Operations (\uad6c Stackdriver)**: \ubaa8\ub2c8\ud130\ub9c1, \ub85c\uae45, \ucd94\uc801, \ub514\ubc84\uac70, \ud504\ub85c\ud30c\uc77c\ub7ec \uae30\ub2a5\uc774 \ud3ec\ud568\ub418\uc5b4 \uc788\uc2b5\ub2c8\ub2e4.\n\n### \u2753 Q&A\n- **Q:** How can you track application latency across microservices?\n- **Q (\ud55c\uae00):** \ub9c8\uc774\ud06c\ub85c\uc11c\ube44\uc2a4 \uc804\uccb4\uc5d0\uc11c \uc560\ud50c\ub9ac\ucf00\uc774\uc158 \uc9c0\uc5f0 \uc2dc\uac04\uc744 \uc5b4\ub5bb\uac8c \ucd94\uc801\ud560 \uc218 \uc788\ub098\uc694?\n- **A:** Use Cloud Trace.\n- **A (\ud55c\uae00):** Cloud Trace\ub97c \uc0ac\uc6a9\ud569\ub2c8\ub2e4.\n"
+        };
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#1e293b',
+                primaryTextColor: '#f3f4f6',
+                primaryBorderColor: '#475569',
+                lineColor: '#60a5fa',
+                secondaryColor: '#334155',
+                tertiaryColor: '#0f172a'
+            }
+        });
+
+        // Custom Renderer for visual separation
+        const renderer = new marked.Renderer();
+        
+        renderer.heading = function(text, level) {
+            if (level === 2) {
+                return `<h2 class="section-title">${text}</h2>`;
+            }
+            return `<h${level}>${text}</h${level}>`;
+        };
+
+        renderer.code = function(code, language) {
+            if (language === 'mermaid') {
+                return `<div class="mermaid">${code}</div>`;
+            }
+            return `<pre><code class="language-${language}">${code}</code></pre>`;
+        };
+
+        marked.setOptions({ renderer: renderer });
+
+        function formatEnhancedContent(rawHtml) {
+            let div = document.createElement('div');
+            div.innerHTML = rawHtml;
+
+            // Wrap English sections
+            let enHeaders = Array.from(div.querySelectorAll('h3')).filter(h => h.textContent.includes('English') || h.textContent.includes('🌐'));
+            enHeaders.forEach(h => {
+                let wrapper = document.createElement('div');
+                wrapper.className = 'section-block lang-en-block';
+                h.parentNode.insertBefore(wrapper, h);
+                let next = h.nextElementSibling;
+                wrapper.appendChild(h);
+                while (next && next.tagName !== 'H3' && !next.classList.contains('section-title')) {
+                    let temp = next;
+                    next = next.nextElementSibling;
+                    wrapper.appendChild(temp);
+                }
+            });
+
+            // Wrap Korean sections
+            let koHeaders = Array.from(div.querySelectorAll('h3')).filter(h => h.textContent.includes('한국어') || h.textContent.includes('🇰🇷'));
+            koHeaders.forEach(h => {
+                let wrapper = document.createElement('div');
+                wrapper.className = 'section-block lang-ko-block';
+                h.parentNode.insertBefore(wrapper, h);
+                let next = h.nextElementSibling;
+                wrapper.appendChild(h);
+                while (next && next.tagName !== 'H3' && !next.classList.contains('section-title') && !next.classList.contains('mermaid')) {
+                    let temp = next;
+                    next = next.nextElementSibling;
+                    wrapper.appendChild(temp);
+                }
+            });
+
+            // Wrap QA sections
+            let qaHeaders = Array.from(div.querySelectorAll('h3')).filter(h => h.textContent.includes('Q&A') || h.textContent.includes('❓'));
+            qaHeaders.forEach(h => {
+                let wrapper = document.createElement('div');
+                wrapper.className = 'qa-block';
+                h.parentNode.insertBefore(wrapper, h);
+                let next = h.nextElementSibling;
+                wrapper.appendChild(h);
+                while (next && next.tagName !== 'H3' && !next.classList.contains('section-title')) {
+                    let temp = next;
+                    next = next.nextElementSibling;
+                    wrapper.appendChild(temp);
+                }
+            });
+
+            return div.innerHTML;
+        }
+
+        function renderContent(tab) {
+            const viewer = document.getElementById('markdown-viewer');
+            const rawHtml = marked.parse(contents[tab]);
+            viewer.innerHTML = formatEnhancedContent(rawHtml);
+            
+            // Re-render Mermaid
+            setTimeout(() => {
+                mermaid.run();
+            }, 100);
+
+            generateTOC();
+            document.getElementById('main-content').scrollTop = 0;
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === tab);
+            });
+            renderContent(tab);
+        }
+
+        function generateTOC() {
+            const toc = document.getElementById('toc');
+            toc.innerHTML = '';
+            const viewer = document.getElementById('markdown-viewer');
+            const headers = viewer.querySelectorAll('.section-title');
+            
+            headers.forEach((header, index) => {
+                const id = 'header-' + index;
+                header.id = id;
+                
+                const item = document.createElement('div');
+                item.className = 'toc-item';
+                
+                const link = document.createElement('a');
+                link.className = 'toc-link';
+                link.textContent = header.textContent.trim();
+                link.onclick = () => {
+                    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                };
+                
+                item.appendChild(link);
+                toc.appendChild(item);
+            });
+        }
+
+        function handleSearch(query) {
+            const links = document.querySelectorAll('.toc-link');
+            links.forEach(link => {
+                const text = link.textContent.toLowerCase();
+                const matches = text.includes(query.toLowerCase());
+                link.parentElement.style.display = matches ? 'block' : 'none';
+            });
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // First Render
+        renderContent(1);
+    </script>
+</body>
+</html>
