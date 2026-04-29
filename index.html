@@ -69,28 +69,70 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
 }
 .sidebar-search input::placeholder{color:var(--text-dim)}
 .sidebar-search input:focus{border-color:var(--accent)}
-.nav-section-label{
-  font-size:0.65rem;
-  font-weight:600;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--text-dim);
-  padding:14px 18px 6px;
-}
-.nav-link{
-  display:block;
-  padding:9px 18px;
+/* TREE NAV */
+.tree-root{padding:12px 0;}
+.tree-parent{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 16px;
   font-size:0.82rem;
+  font-weight:600;
+  color:var(--text);
+  cursor:pointer;
+  user-select:none;
+  border-left:3px solid transparent;
+  transition:all 0.2s;
+}
+.tree-parent:hover{background:rgba(255,255,255,0.04);color:var(--accent)}
+.tree-parent.open{color:var(--accent);border-left-color:var(--accent);}
+.tree-arrow{
+  font-size:0.6rem;
+  transition:transform 0.2s;
+  opacity:0.6;
+  flex-shrink:0;
+}
+.tree-parent.open .tree-arrow{transform:rotate(90deg)}
+.tree-icon{font-size:0.9rem;flex-shrink:0;}
+.tree-children{
+  display:none;
+  flex-direction:column;
+}
+.tree-children.open{display:flex;}
+.tree-leaf{
+  display:block;
+  padding:7px 16px 7px 38px;
+  font-size:0.79rem;
   color:var(--text-dim);
   text-decoration:none;
   border-left:3px solid transparent;
-  transition:all 0.2s;
+  transition:all 0.15s;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.nav-link:hover{color:var(--text);background:rgba(255,255,255,0.04);border-left-color:var(--accent)}
-.nav-link.active{color:var(--accent);background:rgba(79,142,247,0.08);border-left-color:var(--accent);font-weight:600}
+.tree-leaf:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+.tree-leaf.active{color:var(--accent);background:rgba(79,142,247,0.08);border-left-color:var(--accent);font-weight:600;}
+.tree-disabled{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 16px;
+  font-size:0.82rem;
+  font-weight:600;
+  color:var(--text-dim);
+  opacity:0.5;
+  cursor:not-allowed;
+}
+.coming-soon{
+  font-size:0.6rem;
+  background:rgba(79,142,247,0.2);
+  color:var(--accent);
+  padding:2px 6px;
+  border-radius:4px;
+  font-weight:600;
+  letter-spacing:0.05em;
+}
 
 /* MAIN */
 #main{
@@ -203,19 +245,32 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
 <nav id="sidebar">
   <div class="sidebar-logo"><span>☁️</span> GCP PCA</div>
   <div class="sidebar-search"><input type="text" id="search-input" placeholder="Quick search..." autocomplete="off"></div>
-  <div class="nav-section-label">Topics</div>
-  <a href="#infrastructure" class="nav-link" data-target="infrastructure">Google's Infrastructure</a>
-<a href="#networking" class="nav-link" data-target="networking">Networking Fundamentals</a>
-<a href="#iam" class="nav-link" data-target="iam">Cloud IAM</a>
-<a href="#resource-mgmt" class="nav-link" data-target="resource-mgmt">Resource Management</a>
-<a href="#resources-table" class="nav-link" data-target="resources-table">Global/Regional/Zonal</a>
-<a href="#compute" class="nav-link" data-target="compute">Compute Options</a>
-<a href="#storage" class="nav-link" data-target="storage">Storage & Databases</a>
-<a href="#networking2" class="nav-link" data-target="networking2">Networking Services</a>
-<a href="#bigdata" class="nav-link" data-target="bigdata">Big Data & IoT</a>
-<a href="#operations" class="nav-link" data-target="operations">Operations & Management</a>
-<a href="#development" class="nav-link" data-target="development">Development & APIs</a>
+  <div class="tree-root">
+    <div class="tree-parent open" onclick="toggleTree(this)">
+      <span class="tree-arrow">&#9658;</span>
+      <span class="tree-icon">📋</span>
+      Cheat Sheet
+    </div>
+    <div class="tree-children open">
+      <a href="#infrastructure" class="tree-leaf" data-target="infrastructure">Google's Infrastructure</a>
+<a href="#networking" class="tree-leaf" data-target="networking">Networking Fundamentals</a>
+<a href="#iam" class="tree-leaf" data-target="iam">Cloud IAM</a>
+<a href="#resource-mgmt" class="tree-leaf" data-target="resource-mgmt">Resource Management</a>
+<a href="#resources-table" class="tree-leaf" data-target="resources-table">Global/Regional/Zonal</a>
+<a href="#compute" class="tree-leaf" data-target="compute">Compute Options</a>
+<a href="#storage" class="tree-leaf" data-target="storage">Storage & Databases</a>
+<a href="#networking2" class="tree-leaf" data-target="networking2">Networking Services</a>
+<a href="#bigdata" class="tree-leaf" data-target="bigdata">Big Data & IoT</a>
+<a href="#operations" class="tree-leaf" data-target="operations">Operations & Management</a>
+<a href="#development" class="tree-leaf" data-target="development">Development & APIs</a>
 
+    </div>
+    <div class="tree-disabled">
+      <span class="tree-icon">📝</span>
+      Mock Exam
+      <span class="coming-soon">SOON</span>
+    </div>
+  </div>
 </nav>
 <main id="main">
   <div class="page-header">
@@ -571,14 +626,20 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);displ
 
 </main>
 <script>
+function toggleTree(el) {
+  el.classList.toggle('open');
+  const children = el.nextElementSibling;
+  if(children) children.classList.toggle('open');
+}
+
 // Active nav highlight on scroll
 const sections = document.querySelectorAll('.topic-section');
-const navLinks = document.querySelectorAll('.nav-link');
+const navLinks = document.querySelectorAll('.tree-leaf');
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(e.isIntersecting) {
       navLinks.forEach(l => l.classList.remove('active'));
-      const active = document.querySelector('.nav-link[data-target="' + e.target.id + '"]');
+      const active = document.querySelector('.tree-leaf[data-target="' + e.target.id + '"]');
       if(active) active.classList.add('active');
     }
   });
