@@ -1,47 +1,23 @@
 #### 🎯 1. 출제의도
-* 이 문제는 대규모 IoT 센서 데이터(시계열 데이터)의 고속 수집 및 분석 요구사항에 맞는 최적의 데이터베이스 유형을 선택할 수 있는지 평가합니다.
+이 문제는 대규모 분산 환경에서 실시간으로 발생하는 센서 데이터를 효율적으로 수집, 저장하고 유연하게 분석하기 위한 최적의 데이터베이스 유형을 선택하는 능력을 평가합니다. 특히 데이터의 규모와 유연성 요구사항에 따라 관계형(Relational)과 비관계형(NoSQL) 데이터베이스의 적합성을 비교하는 것이 핵심입니다.
 
 #### 📝 2. 지문 해석 및 핵심 영문법/어휘
 **[질문 원문 전체]**
 ```text
-Your company wants to track whether someone is present
-in a meeting room reserved for a scheduled meeting.
-
-There are 1000 meeting rooms across 5 offices
-on 3 continents.
-
-Each room is equipped with a motion sensor
-that reports its status every second.
-
-The data from the motion detector includes only
-a sensor ID and several different discrete items
-of information.
-
-Analysts will use this data, together with information
-about account owners and office locations.
-
-Which database type should you use?
+Your company wants to track whether someone is present in a meeting room reserved for a scheduled meeting. There are 1000 meeting rooms across 5 offices on 3 continents. Each room is equipped with a motion sensor that reports its status every second. The data from the motion detector includes only a sensor ID and several different discrete items of information. Analysts will use this data, together with information about account owners and office locations.Which database type should you use?
 ```
 
 **[한글 해석]**
 ```text
-귀사는 예정된 회의를 위해 예약된 회의실에
-누군가가 있는지 여부를 추적하고자 합니다.
-
-3개 대륙의 5개 사무실에 걸쳐
-1,000개의 회의실이 있습니다.
-
-각 회의실에는 매초 상태를 보고하는
-모션 센서가 장착되어 있습니다.
-
-모션 센서의 데이터에는 센서 ID와
-몇 가지 서로 다른 불연속적인 정보만 포함됩니다.
-
-분석가들은 계정 소유자 및 사무실 위치에 대한 정보와
-함께 이 데이터를 사용할 것입니다.
-
-어떤 데이터베이스 유형을 사용해야 합니까?
+귀사의 회사는 / 누군가가 예약된 회의를 위해 지정된 회의실에 있는지 여부를 추적하기를 원합니다.
+3개 대륙에 걸쳐 5개 사무실에 1000개의 회의실이 있습니다.
+각 회의실에는 매초 상태를 보고하는 모션 센서가 장착되어 있습니다.
+모션 감지기에서 나오는 데이터는 / 오직 센서 ID와 여러 다른 개별적인 정보 항목들을 포함합니다.
+분석가들은 이 데이터를 / 계정 소유자 및 사무실 위치에 대한 정보와 함께 사용할 것입니다.
+어떤 데이터베이스 유형을 사용해야 할까요?
 ```
+
+Suggested Answer: B 🗳️
 
 A. Flat file
 - (해석: 플랫 파일)
@@ -53,40 +29,83 @@ C. Relational
 - (해석: 관계형)
 
 D. Blobstore
-- (해석: Blob 스토어)
+- (해석: 블롭 저장소)
 
 **[문장별 끊어 읽기 및 해석]**
-* **Your company wants to track / whether someone is present / in a meeting room / reserved for a scheduled meeting.**
-  * (해석) 귀사는 추적하기를 원합니다 / 누군가 있는지 여부를 / 회의실에 / 예정된 회의를 위해 예약된.
-* **There are 1000 meeting rooms / across 5 offices / on 3 continents.**
-  * (해석) 1,000개의 회의실이 있습니다 / 5개 사무실에 걸쳐 / 3개 대륙에 있는.
-* **Each room is equipped with / a motion sensor / that reports its status / every second.**
-  * (해석) 각 회의실에는 갖춰져 있습니다 / 모션 센서가 / 상태를 보고하는 / 매초.
-* **The data from the motion detector / includes only a sensor ID / and several different discrete items / of information.**
-  * (해석) 모션 센서로부터의 데이터는 / 센서 ID만 포함합니다 / 그리고 몇 가지 다른 불연속적인 항목들을 / 정보의.
+*   **Your company wants to track / whether someone is present / in a meeting room / reserved for a scheduled meeting.**
+    *   (해석) 귀사의 회사는 추적하기를 원합니다 / 누군가 참석해 있는지 / 회의실에 / 예정된 회의를 위해 예약된.
+*   **There are 1000 meeting rooms / across 5 offices / on 3 continents.**
+    *   (해석) 1000개의 회의실이 있습니다 / 5개 사무실에 걸쳐 / 3개 대륙에.
+*   **Each room is equipped with a motion sensor / that reports its status / every second.**
+    *   (해석) 각 회의실은 모션 센서가 장착되어 있습니다 / 그것의 상태를 보고하는 / 매 초마다.
+*   **The data from the motion detector / includes only a sensor ID / and several different discrete items of information.**
+    *   (해석) 모션 감지기로부터의 데이터는 / 오직 센서 ID와 / 여러 다른 개별적인 정보 항목들을 포함합니다.
+*   **Analysts will use this data, / together with information / about account owners and office locations.**
+    *   (해석) 분석가들은 이 데이터를 사용할 것입니다 / 정보와 함께 / 계정 소유자 및 사무실 위치에 대한.
+*   **Which database type / should you use?**
+    *   (해석) 어떤 데이터베이스 유형을 / 당신은 사용해야 할까요?
 
 **[핵심 어휘 및 구문]**
-* **track**: (동사) 추적하다. 시간의 흐름에 따른 상태 변화를 기록하고 모니터링하는 것입니다.
-* **be reserved for**: (숙어) ~을 위해 예약되다.
-* **be equipped with**: (숙어) ~을 갖추고 있다, 장착되어 있다.
-* **motion sensor**: (명사) 모션 센서, 움직임 감지기.
-* **every second**: (부사구) 매초. 높은 빈도의 데이터 발생을 의미합니다.
-* **discrete**: (형용사) 불연속적인, 별개의.
-* **account owner**: (명사구) 계정 소유자.
-* **database type**: (명사구) 데이터베이스 유형. (NoSQL, RDBMS 등)
+*   **track**: (동사) 추적하다, 기록하다. IT 문맥에서 특정 이벤트, 상태 변화, 또는 객체의 위치 및 움직임을 모니터링하고 데이터를 수집하는 행위를 의미합니다. (예: 사용자 행동을 track하다.)
+*   **present**: (형용사) 참석한, 존재하는. 이 문제에서는 회의실에 사람이 물리적으로 '존재하는' 상태를 나타냅니다.
+*   **reserved for**: (구동사) ~을 위해 예약된/지정된. 특정 목적이나 사용자를 위해 사전에 공간이나 자원이 할당되었음을 의미합니다.
+*   **scheduled meeting**: (명사구) 예정된 회의. 사전에 계획되어 시간과 장소가 정해진 공식적인 모임을 뜻합니다.
+*   **across**: (전치사) ~에 걸쳐, ~전역에. 지리적으로 넓게 분포되어 있거나 여러 구역에 걸쳐 있음을 강조할 때 사용됩니다. (예: across the globe)
+*   **equipped with**: (구동사) ~을 갖추다, ~이 장착되어 있다. 특정 기능이나 장비를 보유하고 있음을 설명할 때 쓰입니다. (예: equipped with a high-resolution camera)
+*   **motion sensor**: (명사구) 모션 센서, 움직임 감지 센서. 물리적 움직임을 감지하여 신호를 보내는 전자 장치를 말합니다. IoT 환경에서 핵심적인 센서 종류입니다.
+*   **reports its status**: (동사구) 상태를 보고하다. 시스템, 장치 또는 서비스가 자신의 현재 운영 상태나 측정값을 주기적으로 전달하는 행위를 나타냅니다.
+*   **every second**: (부사구) 매 초마다. 데이터 발생 빈도가 매우 높음을 나타내며, 실시간 또는 고빈도 데이터 스트리밍 시나리오임을 암시합니다.
+*   **motion detector**: (명사구) 모션 감지기. `motion sensor`와 유사하게 움직임을 탐지하는 장치를 통칭합니다.
+*   **discrete items of information**: (명사구) 개별적인 정보 항목들. 서로 독립적이고 구분되는 정보 조각들을 의미하며, 데이터의 형태가 고정적이지 않고 유연할 수 있음을 나타냅니다.
+*   **analysts**: (명사) 분석가들. 데이터를 수집, 처리, 해석하여 유의미한 통찰력을 도출하는 전문가 집단을 말합니다.
+*   **together with**: (전치사구) ~와 함께. 두 가지 이상의 독립적인 요소나 정보가 결합되어 사용됨을 나타냅니다.
+*   **account owners**: (명사구) 계정 소유자. 특정 서비스, 자원 또는 자산에 대한 소유권이나 관리 권한을 가진 주체를 의미합니다.
+*   **office locations**: (명사구) 사무실 위치. 회사의 지점이나 사무실이 위치한 물리적 주소 또는 지리적 좌표 정보를 나타냅니다.
 
 #### ✅ 3. 정답 및 문제 해설
-* **정답: B (NoSQL)**
-* **해설**:
-  * 문제의 핵심 제약 조건은 **1,000개의 회의실에서 매초 상태를 보고**한다는 점입니다. 즉, 초당 최소 1,000건의 쓰기(Write) 작업이 지속적으로 발생합니다.
-  * 또한 데이터 구조는 센서 ID와 몇 가지 단순한 정보(`discrete items of information`)로 구성된 단순 키-값 형태나 시계열 데이터에 가깝습니다.
-  * 이러한 고빈도, 대용량 쓰기 요구사항과 단순한 데이터 구조에는 수평적 확장이 용이하고 고속 쓰기에 최적화된 **NoSQL 데이터베이스**(GCP의 Cloud Bigtable 등)가 가장 적합합니다.
-* **오답 분석**:
-  * **A, D**: Flat file과 Blobstore(Cloud Storage)는 대량의 초당 트랜잭션을 실시간으로 처리하고 쿼리 분석을 지원하기에 적합하지 않은 객체 기반 스토리지입니다.
-  * **C**: 관계형 데이터베이스(RDBMS)는 초당 수천 건의 지속적인 고속 쓰기 시 락(Lock) 및 성능 저하가 발생할 수 있으며, 확장에 비용이 많이 듭니다.
+*   **정답: B (NoSQL)**
+*   **해설**:
+    이 시나리오의 핵심 요구사항은 대규모의 실시간 스트리밍 데이터 처리와 유연한 데이터 모델링입니다.
+    1.  **대규모 데이터 볼륨**: "1000 meeting rooms"에서 "reports its status every second"는 초당 1000건의 데이터를 의미하며, 이는 매우 높은 데이터 유입량(high ingress rate)입니다. NoSQL 데이터베이스는 수평적 확장(horizontal scaling)을 통해 이러한 대규모 데이터를 효율적으로 처리하고 저장하는 데 최적화되어 있습니다.
+    2.  **유연한 스키마**: 센서 데이터가 "sensor ID and several different discrete items of information"을 포함하고, 나중에 "account owners and office locations" 정보와 결합될 예정입니다. 이는 데이터 형태가 고정적이지 않고 유연하게 변화할 수 있음을 시사합니다. NoSQL은 스키마리스(schemaless) 또는 유연한 스키마(flexible schema)를 지원하여 이러한 다양한 데이터 타입을 손쉽게 저장하고 관리할 수 있습니다.
+    3.  **분석 용이성**: 분석가들이 데이터를 사용할 것이므로, 대량의 데이터를 빠르게 쿼리하고 분석할 수 있는 성능이 중요합니다. NoSQL 데이터베이스는 특정 쿼리 패턴에 최적화된 다양한 데이터 모델(예: 문서, 키-값, 컬럼 패밀리)을 제공하여 분석 워크로드에 효과적으로 대응할 수 있습니다.
+    이러한 특성들, 특히 대규모의 고속 쓰기 및 읽기 성능, 그리고 데이터 모델의 유연성은 NoSQL 데이터베이스를 이 문제에 가장 적합한 선택지로 만듭니다.
+
+*   **오답 분석**:
+    *   **A. Flat file (플랫 파일)**:
+        플랫 파일은 구조가 단순한 텍스트 파일 등으로 데이터를 저장하는 방식입니다. 이 시나리오처럼 "1000개의 회의실에서 매초" 데이터가 발생하는 대규모의 실시간 데이터 스트림을 처리하기에는 전혀 적합하지 않습니다. 데이터 일관성, 동시성 제어, 트랜잭션, 인덱싱, 복구 등 복잡한 데이터 관리 기능이 부재하여 확장성, 안정성, 성능 면에서 요구사항을 충족할 수 없습니다. 매우 소량의, 정적인 데이터 저장에만 고려될 수 있습니다.
+    *   **C. Relational (관계형)**:
+        관계형 데이터베이스(RDB)는 엄격한 스키마를 기반으로 데이터 일관성과 복잡한 트랜잭션을 강력하게 보장합니다. 하지만 이 문제에서 제시된 "several different discrete items of information"과 같은 유연하거나 변화하는 데이터 형태를 처리하려면 잦은 스키마 변경이 필요하여 관리 오버헤드가 크고 비효율적입니다. 또한, 초당 1000건 이상의 고속 쓰기 처리 시 수평 확장이 NoSQL에 비해 어렵고, 대규모 분산 환경에서 성능 병목 현상이 발생하기 쉽습니다. 관계형 DB는 미리 정의된 구조화된 데이터와 강력한 ACID 트랜잭션이 요구되는 금융 거래나 재고 관리 시스템 등에는 적합하지만, 대규모 IoT 센서 데이터에는 부적합합니다.
+    *   **D. Blobstore (블롭 저장소)**:
+        블롭 저장소(예: Google Cloud Storage)는 이미지, 비디오, 오디오 파일, 백업 파일 등과 같은 비정형 대용량 객체(Binary Large Object, BLOB)를 저장하는 데 최적화된 서비스입니다. 센서 데이터와 같이 정형/반정형 형태의 작은 데이터 조각들이 연속적으로 발생하고 빈번하게 쿼리 및 분석되어야 하는 시나리오에는 적합하지 않습니다. 블롭 저장소는 객체 자체의 저장 효율은 높지만, 객체 내부의 데이터를 직접 쿼리하거나 분석하는 기능은 제한적이며, 주로 메타데이터 검색에 의존합니다. 이 문제에서 요구하는 센서 데이터의 실시간 수집 및 분석에는 부적합합니다.
 
 #### 🧠 4. 핵심 개념 다지기
-* **Time-Series Data (시계열 데이터)**:
-  * **개념**: 시간의 흐름에 따라 순차적으로 기록된 데이터의 배열입니다. (예: IoT 센서 데이터, 주식 차트 등)
-  * **문제 내 쓰임**: 매초 보고되는 센서 데이터가 이에 해당하며, NoSQL(Cloud Bigtable)이 시계열 데이터 저장의 표준으로 쓰입니다.
-```
+*   **NoSQL 데이터베이스**:
+    *   **개념**: Not only SQL의 약자로, 관계형 데이터베이스(RDB)의 제약에서 벗어나 다양한 데이터 모델(문서, 키-값, 컬럼, 그래프 등)을 지원하며, 대규모 분산 환경에서 고성능, 고가용성, 유연한 스키마를 제공하는 비관계형 데이터베이스입니다.
+    *   **문제 내 쓰임**:
+        1.  **대규모 실시간 데이터 처리**: 문제의 1000개 회의실에서 매초 발생하는 센서 데이터(초당 1000건)는 매우 높은 쓰기 처리량(throughput)을 요구합니다. NoSQL 데이터베이스는 뛰어난 수평 확장성(horizontal scalability)을 통해 이러한 대규모 실시간 스트리밍 데이터를 효율적으로 분산 저장하고 처리할 수 있어, 시스템의 부하를 효과적으로 분산시킬 수 있습니다.
+        2.  **유연한 스키마**: 센서 데이터가 "sensor ID and several different discrete items of information"을 포함하고, 나중에 "account owners and office locations" 정보와 결합될 것이라는 설명은 데이터의 형태가 고정적이지 않고 유연하게 변화할 수 있음을 나타냅니다. NoSQL은 스키마 변경에 유연하게 대응할 수 있는 스키마리스(schemaless) 또는 유연한 스키마 구조를 제공하여, 데이터 모델의 변경이 잦거나 데이터 형태가 다양한 IoT 센서 데이터 저장에 매우 적합합니다.
+        3.  **분석 용이성**: 분석가들이 데이터를 활용하여 인사이트를 얻을 것이므로, 저장된 대량의 데이터를 효율적으로 쿼리하고 분석하는 기능이 중요합니다. NoSQL은 특정 데이터 모델에 최적화된 쿼리 방식을 제공하며, 대규모 분산 처리 시스템과의 통합이 용이하여 분석 워크로드를 효과적으로 지원합니다.
+    *   **특징 및 제약사항**:
+        *   **특징**: 수평 확장 용이성(scale-out), 유연한 스키마, 고성능 쓰기/읽기(특히 대규모 데이터), 다양한 데이터 모델 지원(문서, 키-값, 컬럼, 그래프 등).
+        *   **제약사항**: 관계형 데이터베이스만큼 강력한 ACID 트랜잭션 보장이 어렵거나 부분적으로만 지원될 수 있음(결과적 일관성 모델 사용), 복잡한 조인 쿼리에 비효율적일 수 있음, 데이터 일관성 모델에 대한 이해 필요.
+*   **시계열 데이터 (Time-Series Data)**:
+    *   **개념**: 특정 시점에 기록된 데이터 포인트들의 연속적인 집합을 의미합니다. 센서 데이터, 주식 가격, 시스템 로그, 네트워크 모니터링 데이터 등 시간이 흐름에 따라 순차적으로 생성되는 모든 데이터를 포함합니다.
+    *   **문제 내 쓰임**:
+        1.  **데이터 특성 정의**: "Each room is equipped with a motion sensor that reports its status every second"라는 문구는 이 문제의 핵심 데이터가 '매 초마다' 생성되는 시계열 데이터임을 명확히 보여줍니다. 시계열 데이터는 일반적으로 높은 쓰기 속도를 요구하며, 시간 범위 기반의 쿼리가 빈번하게 발생합니다.
+        2.  **NoSQL 선택의 주요 근거**: 이러한 시계열 데이터의 특성은 NoSQL 데이터베이스, 특히 시계열 데이터베이스(Time-Series Database) 기능이 강화된 NoSQL 솔루션을 선택하는 강력한 근거가 됩니다. NoSQL은 높은 데이터 삽입률을 효율적으로 처리하고, 시간 기반 인덱싱 및 쿼리 최적화를 통해 시계열 데이터 분석에 유리합니다.
+    *   **특징 및 제약사항**:
+        *   **특징**: 시간 기반 인덱싱, 높은 데이터 삽입률, 효율적인 데이터 압축, 특정 기간 동안의 데이터 집계 및 분석 용이, 오래된 데이터의 보존 또는 삭제 정책 관리가 중요.
+        *   **제약사항**: 과거 데이터 수정이 거의 없음(주로 append-only), 데이터 보존 기간 및 용량 계획이 중요.
+*   **수평 확장 (Horizontal Scaling) vs. 수직 확장 (Vertical Scaling)**:
+    *   **개념**:
+        *   **수평 확장**: 서버나 데이터베이스 노드를 추가하여 시스템의 처리 용량을 늘리는 방식입니다. (Scale-out)
+        *   **수직 확장**: 단일 서버의 CPU, 메모리, 디스크 등 하드웨어 사양을 업그레이드하여 시스템의 성능을 향상시키는 방식입니다. (Scale-up)
+    *   **문제 내 쓰임**:
+        1.  **확장성 요구사항**: "1000 meeting rooms"에서 "every second" 데이터는 엄청난 양이므로, 시스템은 향후 더 많은 센서가 추가되거나 데이터 빈도가 늘어나더라도 안정적으로 운영될 수 있는 확장성을 갖춰야 합니다.
+        2.  **NoSQL의 이점**: NoSQL 데이터베이스는 관계형 데이터베이스에 비해 수평 확장이 훨씬 용이합니다. 여러 노드에 데이터를 분산 저장하고 처리함으로써, 단일 서버의 한계를 넘어 무한대에 가까운 확장성을 제공할 수 있어 이 문제의 대규모 분산 환경에 최적화된 솔루션이 됩니다.
+    *   **특징 및 제약사항**:
+        *   **수평 확장 특징**: 무제한에 가까운 확장성, 높은 가용성, 비용 효율적(일반적으로 저렴한 하드웨어 사용).
+        *   **수평 확장 제약사항**: 데이터 일관성 관리 복잡성, 분산 시스템 설계의 어려움.
+        *   **수직 확장 특징**: 단일 시스템 관리 용이성, 강력한 데이터 일관성.
+        *   **수직 확장 제약사항**: 확장 한계 명확, 비용 증가, 단일 장애점(SPOF) 위험.

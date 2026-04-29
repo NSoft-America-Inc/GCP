@@ -10,7 +10,27 @@ Topic #: 2
 
 [All Professional Cloud Architect Questions]
 
-The migration of JencoMart's application to Google Cloud Platform (GCP) is progressing too slowly. The infrastructure is shown in the diagram. You want to maximize throughput.What are three potential bottlenecks? (Choose three.) 
+The migration of JencoMart's application to Google Cloud Platform (GCP) is progressing too slowly. The infrastructure is shown in the diagram below. You want to maximize throughput.
+
+### Infrastructure Diagram (Mermaid)
+```mermaid
+graph LR
+    subgraph On-premises_infrastructure
+        R1[Rack] -- |Connect| ER[Edge router]
+        R2[Rack] -- |Connect| ER
+        R3[Rack] -- |Connect| ER
+    end
+
+    ER -- |Encrypted Tunnel| VPN[Cloud VPN]
+
+    subgraph Google_Cloud
+        VPN --> G1[Managed group: VMs]
+        VPN --> G2[Managed group: VMs]
+        VPN --> CS[Cloud Storage]
+    end
+```
+
+What are three potential bottlenecks? (Choose three.) 
 Suggested Answer: ACF 🗳️ 
 
 A. A single VPN tunnel, which limits throughput

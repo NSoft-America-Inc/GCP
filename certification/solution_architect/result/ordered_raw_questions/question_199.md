@@ -10,7 +10,15 @@ Topic #: 1
 
 [All Professional Cloud Architect Questions]
 
-You have a Compute Engine application that you want to autoscale when total memory usage exceeds 80%. You have installed the Cloud Monitoring agent and configured the autoscaling policy as follows:You observe that the application does not scale under high load. You want to resolve this. What should you do? 
+You have a Compute Engine application that you want to autoscale when total memory usage exceeds 80%. You have installed the Cloud Monitoring agent and configured the autoscaling policy as follows:
+
+### Autoscaling Configuration
+*   **Metric identifier:** `agent.googleapis.com/memory/percent_used`
+*   **Filter:** `metric.label.state = 'used'`
+*   **Target utilization level:** `80`
+*   **Target type:** `GAUGE`
+
+You observe that the application does not scale under high load. You want to resolve this. What should you do? 
 Suggested Answer: C 🗳️ 
 
 A. Change the Target type to DELTA_PER_MINUTE.

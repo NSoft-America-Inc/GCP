@@ -10,7 +10,31 @@ Topic #: 1
 
 [All Professional Cloud Architect Questions]
 
-Your company has a project in Google Cloud with three Virtual Private Clouds (VPCs). There is a Compute Engine instance on each VPC. Network subnets do not overlap and must remain separated. The network configuration is shown below.Instance #1 is an exception and must communicate directly with both Instance #2 and Instance #3 via internal IPs. How should you accomplish this? 
+Your company has a project in Google Cloud with three Virtual Private Clouds (VPCs). There is a Compute Engine instance on each VPC. Network subnets do not overlap and must remain separated. The network configuration is shown below.
+
+### VPC Network Configuration (Mermaid)
+```mermaid
+graph TB
+    subgraph VPC_1
+        subgraph subnet_1
+            I1[Instance #1: Compute Engine]
+        end
+    end
+
+    subgraph VPC_2
+        subgraph subnet_2
+            I2[Instance #2: Compute Engine]
+        end
+    end
+
+    subgraph VPC_3
+        subgraph subnet_3
+            I3[Instance #3: Compute Engine]
+        end
+    end
+```
+
+Instance #1 is an exception and must communicate directly with both Instance #2 and Instance #3 via internal IPs. How should you accomplish this? 
 Suggested Answer: B 🗳️ 
 
 A. Create a cloud router to advertise subnet #2 and subnet #3 to subnet #1.

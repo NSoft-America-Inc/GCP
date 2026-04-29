@@ -4,11 +4,37 @@
 #### 📝 2. 지문 해석 및 핵심 영문법/어휘
 **[질문 원문 전체]**
 ```text
-A news feed web service has the following code running
-on Google App Engine.
+A news feed web service has the following code running on Google App Engine.
 
-During peak load, users report that they can see
-news articles they already viewed.
+### Application Code (Python)
+```python
+import news
+from flask import Flask, redirect, request
+from flask.ext.api import status
+from google.appengine.api import users
+
+app = Flask(__name__)
+sessions = {}
+
+@app.route("/")
+def homepage():
+    user = users.get_current_user()
+    if not user:
+        return "Invalid login", status.HTTP_401_UNAUTHORIZED
+
+    if user not in sessions:
+        sessions[user] = {"viewed": []}
+
+    news_articles = news.get_new_news(user, sessions[user]["viewed"])
+    sessions[user]["viewed"] += [n["id"] for n in news_articles]
+
+    return news.render(news_articles)
+
+if __name__ == "__main__":
+    app.run()
+```
+
+During peak load, users report that they can see news articles they already viewed.
 
 What is the most likely cause of this problem?
 ```

@@ -111,7 +111,67 @@ Topic #: 1
 
 [All Professional Cloud Architect Questions]
 
-A news feed web service has the following code running on Google App Engine. During peak load, users report that they can see news articles they already viewed.What is the most likely cause of this problem? 
+A news feed web service has the following code running on Google App Engine. During peak load, users report that they can see news articles they already viewed.
+
+### Application Code (Python)
+```python
+import news
+from flask import Flask, redirect, request
+from flask.ext.api import status
+from google.appengine.api import users
+
+app = Flask(__name__)
+sessions = {}
+
+@app.route("/")
+def homepage():
+    user = users.get_current_user()
+    if not user:
+        return "Invalid login", status.HTTP_401_UNAUTHORIZED
+
+    if user not in sessions:
+        sessions[user] = {"viewed": []}
+
+    news_articles = news.get_new_news(user, sessions[user]["viewed"])
+    sessions[user]["viewed"] += [n["id"] for n in news_articles]
+
+    return news.render(news_articles)
+
+if __name__ == "__main__":
+    app.run()
+```
+
+What is the most likely cause of this problem?
+
+### Application Code (Python)
+```python
+import news
+from flask import Flask, redirect, request
+from flask.ext.api import status
+from google.appengine.api import users
+
+app = Flask(__name__)
+sessions = {}
+
+@app.route("/")
+def homepage():
+    user = users.get_current_user()
+    if not user:
+        return "Invalid login", status.HTTP_401_UNAUTHORIZED
+
+    if user not in sessions:
+        sessions[user] = {"viewed": []}
+
+    news_articles = news.get_new_news(user, sessions[user]["viewed"])
+    sessions[user]["viewed"] += [n["id"] for n in news_articles]
+
+    return news.render(news_articles)
+
+if __name__ == "__main__":
+    app.run()
+```
+
+What is the most likely cause of this problem?
 Suggested Answer: A 🗳️ 
 
 A. The session variable is local to just a single instance
@@ -681,7 +741,33 @@ Topic #: 1
 
 [All Professional Cloud Architect Questions]
 
-One of the developers on your team deployed their application in Google Container Engine with the Dockerfile below. They report that their application deployments are taking too long.You want to optimize this Dockerfile for faster deployment times without adversely affecting the app's functionality.Which two actions should you take? (Choose two.) 
+One of the developers on your team deployed their application in Google Container Engine with the Dockerfile below. They report that their application deployments are taking too long.
+
+### Dockerfile
+```dockerfile
+FROM ubuntu:16.04
+
+COPY . /src
+
+RUN apt-get update && apt-get install -y python python-pip
+
+RUN pip install -r requirements.txt
+```
+
+You want to optimize this Dockerfile for faster deployment times without adversely affecting the app's functionality. Which two actions should you take? (Choose two.)
+
+### Dockerfile
+```dockerfile
+FROM ubuntu:16.04
+
+COPY . /src
+
+RUN apt-get update && apt-get install -y python python-pip
+
+RUN pip install -r requirements.txt
+```
+
+You want to optimize this Dockerfile for faster deployment times without adversely affecting the app's functionality. Which two actions should you take? (Choose two.)
 Suggested Answer: CE 🗳️ 
 
 A. Remove Python after running pip
@@ -1189,7 +1275,38 @@ Topic #: 1
 
 [All Professional Cloud Architect Questions]
 
-You deploy your custom Java application to Google App Engine. It fails to deploy and gives you the following stack trace.What should you do? 
+You deploy your custom Java application to Google App Engine. It fails to deploy and gives you the following stack trace.
+
+### Stack Trace
+```text
+java.lang.SecurityException: SHA1 digest error for com/Altostrat/CloakedServlet.class
+	at com.google.appengine.runtime.Request.process-d36f818a24b8cf1d (Request.java)
+	at sun.security.util.ManifestEntryVerifier.verify(ManifestEntryVerifier.java:210)
+	at java.util.jar.JarVerifier.processEntry(JarVerifier.java:218)
+	at java.util.jar.JarVerifier.update(JarVerifier.java:205)
+	at java.util.jar.JarVerifiersVerifierStream.read(JarVerifier.java:428)
+	at sun.misc.Resource.getBytes(Resource.java:124)
+	at java.net.URL.ClassLoader.defineClass(URLClassLoader.java:273)
+	at sun.reflect.GeneratedMethodAccessor5.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:616)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
+```
+
+	at com.google.appengine.runtime.Request.process-d36f818a24b8cf1d (Request.java)
+	at sun.security.util.ManifestEntryVerifier.verify(ManifestEntryVerifier.java:210)
+	at java.util.jar.JarVerifier.processEntry(JarVerifier.java:218)
+	at java.util.jar.JarVerifier.update(JarVerifier.java:205)
+	at java.util.jar.JarVerifiersVerifierStream.read(JarVerifier.java:428)
+	at sun.misc.Resource.getBytes(Resource.java:124)
+	at java.net.URL.ClassLoader.defineClass(URLClassLoader.java:273)
+	at sun.reflect.GeneratedMethodAccessor5.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:616)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
+```
+
+What should you do?
 Suggested Answer: B 🗳️ 
 
 A. Upload missing JAR files and redeploy your application.
@@ -3733,7 +3850,55 @@ Topic #: 1
 
 [All Professional Cloud Architect Questions]
 
-Your company has a project in Google Cloud with three Virtual Private Clouds (VPCs). There is a Compute Engine instance on each VPC. Network subnets do not overlap and must remain separated. The network configuration is shown below.Instance #1 is an exception and must communicate directly with both Instance #2 and Instance #3 via internal IPs. How should you accomplish this? 
+Your company has a project in Google Cloud with three Virtual Private Clouds (VPCs). There is a Compute Engine instance on each VPC. Network subnets do not overlap and must remain separated. The network configuration is shown below.
+
+### VPC Network Configuration (Mermaid)
+```mermaid
+graph TB
+    subgraph VPC_1
+        subgraph subnet_1
+            I1[Instance #1: Compute Engine]
+        end
+    end
+
+    subgraph VPC_2
+        subgraph subnet_2
+            I2[Instance #2: Compute Engine]
+        end
+    end
+
+    subgraph VPC_3
+        subgraph subnet_3
+            I3[Instance #3: Compute Engine]
+        end
+    end
+```
+
+Instance #1 is an exception and must communicate directly with both Instance #2 and Instance #3 via internal IPs. How should you accomplish this?
+
+### VPC Network Configuration (Mermaid)
+```mermaid
+graph TB
+    subgraph VPC_1
+        subgraph subnet_1
+            I1[Instance #1: Compute Engine]
+        end
+    end
+
+    subgraph VPC_2
+        subgraph subnet_2
+            I2[Instance #2: Compute Engine]
+        end
+    end
+
+    subgraph VPC_3
+        subgraph subnet_3
+            I3[Instance #3: Compute Engine]
+        end
+    end
+```
+
+Instance #1 is an exception and must communicate directly with both Instance #2 and Instance #3 via internal IPs. How should you accomplish this?
 Suggested Answer: B 🗳️ 
 
 A. Create a cloud router to advertise subnet #2 and subnet #3 to subnet #1.
@@ -5911,7 +6076,21 @@ Topic #: 1
 
 [All Professional Cloud Architect Questions]
 
-You have a Compute Engine application that you want to autoscale when total memory usage exceeds 80%. You have installed the Cloud Monitoring agent and configured the autoscaling policy as follows:✑ Metric identifier: agent.googleapis.com/memory/percent_used✑ Filter: metric.label.state = 'used'✑ Target utilization level: 80✑ Target type: GAUGEYou observe that the application does not scale under high load. You want to resolve this. What should you do? 
+You have a Compute Engine application that you want to autoscale when total memory usage exceeds 80%. You have installed the Cloud Monitoring agent and configured the autoscaling policy as follows:
+
+### Autoscaling Configuration
+*   **Metric identifier:** `agent.googleapis.com/memory/percent_used`
+*   **Filter:** `metric.label.state = 'used'`
+*   **Target utilization level:** `80`
+*   **Target type:** `GAUGE`
+
+You observe that the application does not scale under high load. You want to resolve this. What should you do?
+
+*   **Filter:** `metric.label.state = 'used'`
+*   **Target utilization level:** `80`
+*   **Target type:** `GAUGE`
+
+You observe that the application does not scale under high load. You want to resolve this. What should you do?
 Suggested Answer: C 🗳️ 
 
 A. Change the Target type to DELTA_PER_MINUTE.
@@ -8064,7 +8243,27 @@ Topic #: 2
 
 [All Professional Cloud Architect Questions]
 
-The migration of JencoMart's application to Google Cloud Platform (GCP) is progressing too slowly. The infrastructure is shown in the diagram. You want to maximize throughput.What are three potential bottlenecks? (Choose three.) 
+The migration of JencoMart's application to Google Cloud Platform (GCP) is progressing too slowly. The infrastructure is shown in the diagram below. You want to maximize throughput.
+
+### Infrastructure Diagram (Mermaid)
+```mermaid
+graph LR
+    subgraph On-premises_infrastructure
+        R1[Rack] -- |Connect| ER[Edge router]
+        R2[Rack] -- |Connect| ER
+        R3[Rack] -- |Connect| ER
+    end
+
+    ER -- |Encrypted Tunnel| VPN[Cloud VPN]
+
+    subgraph Google_Cloud
+        VPN --> G1[Managed group: VMs]
+        VPN --> G2[Managed group: VMs]
+        VPN --> CS[Cloud Storage]
+    end
+```
+
+What are three potential bottlenecks? (Choose three.)
 Suggested Answer: ACF 🗳️ 
 
 A. A single VPN tunnel, which limits throughput
@@ -8161,7 +8360,71 @@ Topic #: 3
 
 [All Professional Cloud Architect Questions]
 
-For this question, refer to the Helicopter Racing League (HRL) case study. Recently HRL started a new regional racing league in Cape Town, South Africa. In an effort to give customers in Cape Town a better user experience, HRL has partnered with the Content Delivery Network provider, Fastly. HRL needs to allow traffic coming from all of the Fastly IP address ranges into their Virtual Private Cloud network (VPC network). You are a member of the HRL security team and you need to configure the update that will allow only the Fastly IP address ranges through the External HTTP(S) load balancer. Which command should you use?A.B.C.D. 
+For this question, refer to the Helicopter Racing League (HRL) case study. Recently HRL started a new regional racing league in Cape Town, South Africa. In an effort to give customers in Cape Town a better user experience, HRL has partnered with the Content Delivery Network provider, Fastly. HRL needs to allow traffic coming from all of the Fastly IP address ranges into their Virtual Private Cloud network (VPC network). You are a member of the HRL security team and you need to configure the update that will allow only the Fastly IP address ranges through the External HTTP(S) load balancer. Which command should you use?
+
+### Options
+**A.**
+```bash
+gcloud compute security-policies rules update 1000 \
+  --security-policy from-fastly \
+  --src-ip-ranges * \
+  --action "allow"
+```
+
+**B.**
+```bash
+gcloud compute firewall rules update sourceiplist-fastly \
+  --priority 1000 \
+  --allow tcp:443
+```
+
+**C.**
+```bash
+gcloud compute firewall rules update hlr-policy \
+  --priority 1000 \
+  --target-tags=sourceiplist-fastly \
+  --allow tcp:443
+```
+
+**D.**
+```bash
+gcloud compute security-policies rules update 1000 \
+  --security-policy hlr-policy \
+  --expression "evaluatePreconfiguredExpr('sourceiplist-fastly')" \
+  --action "allow"
+```
+
+### Options
+**A.**
+```bash
+gcloud compute security-policies rules update 1000 \
+  --security-policy from-fastly \
+  --src-ip-ranges * \
+  --action "allow"
+```
+
+**B.**
+```bash
+gcloud compute firewall rules update sourceiplist-fastly \
+  --priority 1000 \
+  --allow tcp:443
+```
+
+**C.**
+```bash
+gcloud compute firewall rules update hlr-policy \
+  --priority 1000 \
+  --target-tags=sourceiplist-fastly \
+  --allow tcp:443
+```
+
+**D.**
+```bash
+gcloud compute security-policies rules update 1000 \
+  --security-policy hlr-policy \
+  --expression "evaluatePreconfiguredExpr('sourceiplist-fastly')" \
+  --action "allow"
+```
 Suggested Answer: A Reference:https://cloud.google.com/load-balancing/docs/https 
 
 **Answer: A**
@@ -9153,7 +9416,96 @@ Topic #: 8
 
 [All Professional Cloud Architect Questions]
 
-TerramEarth's CTO wants to use the raw data from connected vehicles to help identify approximately when a vehicle in the field will have a catastrophic failure.You want to allow analysts to centrally query the vehicle data.Which architecture should you recommend?A.B.C.D. 
+TerramEarth's CTO wants to use the raw data from connected vehicles to help identify approximately when a vehicle in the field will have a catastrophic failure. You want to allow analysts to centrally query the vehicle data. Which architecture should you recommend?
+
+### Architecture Options (Mermaid)
+
+**A (Recommended)**
+```mermaid
+graph TD
+    IoT((Connected Vehicles)) -- Cellular --> LB[Load Balancing]
+    LB --> GKE[GKE - Ingestion Server]
+    GKE --> PubSub[Cloud Pub/Sub]
+    PubSub --> Dataflow[Cloud Dataflow]
+    Dataflow --> BQ[BigQuery]
+    BQ --> Analysts[Analysts]
+```
+
+**B (Batch)**
+```mermaid
+graph LR
+    subgraph "On-Prem / Field"
+        V[Unconnected Vehicles] -- "Manual Upload" --> FC[Field Controller]
+    end
+    subgraph "Google Cloud"
+        FC -- "Gzip/CSV" --> GCS[Cloud Storage]
+        GCS --> DF[Cloud Dataflow Batch]
+        DF --> BQ[BigQuery]
+    end
+```
+
+**C (Operational)**
+```mermaid
+graph LR
+    CV[Connected Vehicles] -- "Cellular" --> LB[Load Balancer]
+    LB --> PS[Cloud Pub/Sub]
+    PS --> DF[Cloud Dataflow]
+    DF --> BT[Cloud Bigtable]
+    BT --> Dashboard[Ops Dashboard]
+```
+
+**D (Transactional)**
+```mermaid
+graph LR
+    CV[Connected Vehicles] -- "Streaming" --> LB[Load Balancer]
+    LB --> PS[Cloud Pub/Sub]
+    PS --> DF[Cloud Dataflow]
+    DF --> CSQL[Cloud SQL / Spanner]
+    CSQL --> App[Fleet App]
+```
+
+```mermaid
+graph TD
+    IoT((Connected Vehicles)) -- Cellular --> LB[Load Balancing]
+    LB --> GKE[GKE - Ingestion Server]
+    GKE --> PubSub[Cloud Pub/Sub]
+    PubSub --> Dataflow[Cloud Dataflow]
+    Dataflow --> BQ[BigQuery]
+    BQ --> Analysts[Analysts]
+```
+
+**B (Batch)**
+```mermaid
+graph LR
+    subgraph "On-Prem / Field"
+        V[Unconnected Vehicles] -- "Manual Upload" --> FC[Field Controller]
+    end
+    subgraph "Google Cloud"
+        FC -- "Gzip/CSV" --> GCS[Cloud Storage]
+        GCS --> DF[Cloud Dataflow Batch]
+        DF --> BQ[BigQuery]
+    end
+```
+
+**C (Operational)**
+```mermaid
+graph LR
+    CV[Connected Vehicles] -- "Cellular" --> LB[Load Balancer]
+    LB --> PS[Cloud Pub/Sub]
+    PS --> DF[Cloud Dataflow]
+    DF --> BT[Cloud Bigtable]
+    BT --> Dashboard[Ops Dashboard]
+```
+
+**D (Transactional)**
+```mermaid
+graph LR
+    CV[Connected Vehicles] -- "Streaming" --> LB[Load Balancer]
+    LB --> PS[Cloud Pub/Sub]
+    PS --> DF[Cloud Dataflow]
+    DF --> CSQL[Cloud SQL / Spanner]
+    CSQL --> App[Fleet App]
+```
 Suggested Answer: A The push endpoint can be a load balancer.A container cluster can be used.Cloud Pub/Sub for Stream AnalyticsReference:https://cloud.google.com/pubsub/https://cloud.google.com/solutions/iot/https://cloud.google.com/solutions/designing-connected-vehicle-platform https://cloud.google.com/solutions/designing-connected-vehicle-platform#data_ingestion http://www.eweek.com/big-data-and-analytics/google-touts-value-of-cloud-iot-core-for-analyzing-connected-car-data https://cloud.google.com/solutions/iot/ 
 
 **Answer: A**
